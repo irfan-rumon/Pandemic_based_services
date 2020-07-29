@@ -15,11 +15,15 @@ def index():
 
 
 @app.route('/signup_test')
-def tester():
-    user = UserGeneral(email="jko@gmail.com")
-    is_valid_signUp =  user.signup( user_name = "irfan", user_email = "irgannisho8571@gmail.com", user_password = "abc", user_role = "doctor")
+def signup_tester():
+    user = UserGeneral(email="irfannisho8571@gmail.com")
+    is_valid_signUp =  user.signup( user_name = "irfan", user_email = "irfannisho8571@gmail.com", user_password = "abc", user_role = "doctor")
     return is_valid_signUp
     
+@app.route('/login_test')
+def login_tester():
+    user = UserGeneral(email="minhaj@gmail.com")
+    return user.login("minhaj@gmail.com", "abc")    
 
 if __name__ == "__main__":
     app.run(debug=True)    
