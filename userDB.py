@@ -29,5 +29,23 @@ class UserGeneral(Document):
              if len(currentUser) == 1 : #successfully added to the database
                  return {"success":"True"}
              else:
-                 return {"success":"False"}    
+                 return {"success":"False"}   
+
+    def login(self, user_email, user_password):
+        """
+           check If  email and password matches the data base
+	       if doesn't match  return dictionary {success: False}
+	       if match return dictionary {success: True		   
+                                       user:  matched users name	
+				                     }
+        """                             
+        currentUser = UserGeneral.objects(email = user_email, password = user_password)
+        if len(currentUser) == 0 :        #Email and paddwords not match
+            return {"success":"False"}
+        else:
+            return {"success" : "True",
+                     "user" : currentUser[0].name
+                   }  
+       
+
 
