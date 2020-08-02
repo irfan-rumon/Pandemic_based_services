@@ -1,10 +1,17 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, Blueprint
 from mongoengine import connect
 from mongoengine.errors import NotUniqueError
 from userDB import UserGeneral
 
-app = Flask(__name__)
+from auth import auth
+from test import test
 
+
+app = Flask(__name__)
+app.secret_key = "abc"  
+
+app.register_blueprint(auth, url_prefix="/auth")
+app.register_blueprint(test, url_prefix="/test")
 
 connect(db='cse499', host='localhost', port=27017)
 

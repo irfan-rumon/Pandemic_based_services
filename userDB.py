@@ -7,6 +7,13 @@ class UserGeneral(Document):
     password = StringField(max_length=100)
     role = StringField(max_length=100)
 
+
+
+class UserGeneralDb():
+
+    def __init__(self):
+        pass
+
     def signup(self, user_name, user_email, user_password, user_role):
         """
             it firtst checks whether email already exist in User table: 
@@ -17,7 +24,7 @@ class UserGeneral(Document):
         """
         currentEmail = UserGeneral.objects( email = user_email )
         if len(currentEmail) > 0 : #email already exists
-             return {"success":"False"}
+             return {"success":False}
         else:
              user = UserGeneral()
              user.name = user_name
@@ -27,24 +34,27 @@ class UserGeneral(Document):
              user.save()  #save the new user to database
              currentUser = UserGeneral.objects( email = user_email ) #recently added user's reference
              if len(currentUser) == 1 : #successfully added to the database
-                 return {"success":"True"}
+                 return {"success":True}
              else:
-                 return {"success":"False"}   
+                 return {"success":False}   
 
     def login(self, user_email, user_password):
         """
            check If  email and password matches the data base
 	       if doesn't match  return dictionary {success: False}
 	       if match return dictionary {success: True		   
-                                       user:  matched users name	
-				                     }
+                                       userName: matched users Name
+                                       userEmail: matched users email
+                                       userRole: matched users Role
         """                             
         currentUser = UserGeneral.objects(email = user_email, password = user_password)
         if len(currentUser) == 0 :        #Email and paddwords not match
-            return {"success":"False"}
+            return {"success":False}
         else:
-            return {"success" : "True",
-                     "user" : currentUser[0].name
+            return {"success" : True,
+                     "userName" : currentUser[0].name,
+                     "userEmail" : currentUser[0].email,
+                     "userRole" : currentUser[0].role
                    }  
        
 
