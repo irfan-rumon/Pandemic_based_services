@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, Blueprint
 from mongoengine import connect
 from mongoengine.errors import NotUniqueError
-from userDB import UserGeneral
+from productDB import ProductDb
 
 from auth import auth
 from test import test
@@ -15,22 +15,17 @@ app.register_blueprint(test, url_prefix="/test")
 
 connect(db='cse499', host='localhost', port=27017)
 
+productDb = ProductDb()
+
 
 @app.route('/')
 def index():
     return "This is a web baseded service platform related to pandemic"
 
-
-@app.route('/signup_test')
-def signup_tester():
-    user = UserGeneral(email="irfannisho8571@gmail.com")
-    is_valid_signUp =  user.signup( user_name = "irfan", user_email = "irfannisho8571@gmail.com", user_password = "abc", user_role = "doctor")
-    return is_valid_signUp
-    
-@app.route('/login_test')
-def login_tester():
-    user = UserGeneral(email="minhaj@gmail.com")
-    return user.login("minhaj@gmail.com", "abc")    
+@app.route('/addProduct_test')
+def addProduct():
+    return productDb.add_product(product_name="hand gloves", available_unit = 25, per_unit_charge = 15.00, product_image = "jkjjdf.jpeg", product_description = "This is hand gloves")
+       
 
 if __name__ == "__main__":
     app.run(debug=True)    
