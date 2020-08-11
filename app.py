@@ -18,7 +18,8 @@ connect(db='cse499', host='localhost', port=27017)
 
 @app.route('/')
 def index():
-    return "This is a web baseded service platform related to pandemic"
+    
+    return render_template("home.html")
 
 
 @app.route('/signup_test')

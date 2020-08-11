@@ -17,7 +17,7 @@ def postSignup():
     # print(request.form.get('UserName'))
 
     # user Roles  Which can be accepted . 
-    valid_User_Roles = set(['customer', 'doctor'])
+    valid_User_Roles = set(['customer', 'doctor', 'admin'])
     # checking if UserRole is valid from form submisson 
     if request.form.get('UserRole') not in  valid_User_Roles:
         flash("This Role is not accepted ")
