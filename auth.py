@@ -58,7 +58,7 @@ def postLogin():
             session['UserEmail'] = LoggedInUser['userEmail']
             session['UserName'] = LoggedInUser['userName']
             session['UserRole'] = LoggedInUser['userRole']
-            return redirect(url_for('test.demo'))
+            return redirect(url_for('index'))
         else:
             flash("Error during log in .Try again ")
     except Exception as e:
