@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, Blueprint
 from mongoengine import connect
 from mongoengine.errors import NotUniqueError
-from productDB import ProductDb
+from productDB import Product, ProductDb
 
 from auth import auth
 from test import test
@@ -26,7 +26,11 @@ def index():
 @app.route('/addProduct_test')
 def addProduct():
     return productDb.add_product(product_name="hand gloves", available_unit = 25, per_unit_charge = 15.00, product_image = "jkjjdf.jpeg", product_description = "This is hand gloves")
-       
+
+ 
+@app.route('/increaseProduct_test')
+def increaseProduct():
+    return productDb.increase_product("5f2e893cb21bfbc8153df3c8", 2009)      
 
 if __name__ == "__main__":
     app.run(debug=True)    
