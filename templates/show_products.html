@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Show products{% endblock %}
+
+
+{% block body %}
+
+     <h5>Products details:</h5>
+     {% for product in products %}
+         {{   product   }}
+        <br>
+     {% endfor %}
+
+{% endblock %}
