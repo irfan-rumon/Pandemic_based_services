@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, Blueprint
 from mongoengine import connect
 from mongoengine.errors import NotUniqueError
 from productDB import Product, ProductDb
-
+import datetime
+import time
 from auth import auth
 from test import test
 
@@ -36,6 +37,12 @@ def increaseProduct():
 @app.route('/getAllProducts_test')
 def getAllProducts():
 	return productDb.get_all_products()
+
+
+@app.route('/addUserOrder_test')
+def addUserOrder():
+	return productDb.add_user_order(user_email="irfannisho8571@gmail.com", product_Id="5f2e893cb21bfbc8153df3c8", product_amount = 2, total_price=50, date=datetime.datetime.utcnow)
+
 
 if __name__ == "__main__":
 	app.run(debug=True)    
