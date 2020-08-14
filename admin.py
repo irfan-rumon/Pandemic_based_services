@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from productDB import ProductDb
+
+from middleware import is_loggedIn, has_permission
 from uploadUtils import photos
 from datetime import datetime
 
@@ -11,11 +13,10 @@ admin = Blueprint("admin",__name__, static_folder="static", template_folder="tem
 
 
 @admin.route("/getAdminDashBoard", methods =["GET"])
+@is_loggedIn    # cheking if the user is logged in
+@has_permission('admin') #checking if user has permisson for this route
 def getAdminDashBoard():
-
-
-    
-    
+        
     return render_template("admin.html")
 
 
@@ -23,6 +24,8 @@ def getAdminDashBoard():
 
 
 @admin.route("/postAddProduct", methods =["POST"])
+@is_loggedIn    
+@has_permission('admin') 
 def postAddProduct():
     
     now = datetime.now()
