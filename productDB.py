@@ -1,4 +1,5 @@
 from mongoengine import *
+from flask import Flask, render_template, request, redirect, Blueprint
 
 class Product(Document):
 	product_name = StringField(max_length=100)
@@ -45,6 +46,21 @@ class ProductDb():
 		else:                                           #No product found with that productId
 			return {"Success" : False}
 
+	def get_all_products(self):
+		#return all products detail in a  list with  all Field including pk.		
+		products = Product.objects()                     #getting all products
+		productsList = []                                #list to store product details
+		for product in products:                         #looping through all products
+			productDict = {                              #creating a dictionary for each product
+				'_id': str(product.pk),
+				'product_name': product.product_name,
+				'available_unit': product.available_unit,
+				'per_unit_charge': product.per_unit_charge,
+				'product_image': product.product_image,
+				'product.description' : product.product_description
+			}
+			productsList.append(productDict)
+		return render_template('show_products.html', products = productsList)	
 
 
 
