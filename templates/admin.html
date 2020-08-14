@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}admin{% endblock %}
+
+
+
+{% block body %}
+
+<div class="m-2 " >
+    <div class="d-flex justify-content-center">
+        <h3>Add product</h3>
+    </div>
+    <form action="{{ url_for('admin.postAddProduct') }}" method="POST" enctype="multipart/form-data" >
+        <div class="form-group">
+            <label for="ProductName">Product Name</label>
+            <input type="text" class="form-control" id="ProductName" name="ProductName" placeholder="Enter Product Name" required >
+        </div>
+        <div class="form-group">
+          <label for="AvailableUnit">Available Unit</label>
+          <input type="number" class="form-control" id="AvailableUnit" name="AvailableUnit"  placeholder="Enter Available Unit" required >
+         
+        </div>
+        <div class="form-group">
+            <label for="PerUnitCharge">Per Unit Charge</label>
+            <input type="number" class="form-control" id="PerUnitCharge" name="PerUnitCharge" placeholder="Enter Per Unit Charge" required >
+        </div>
+        <div class="form-group">
+            <label for="ProductDescription">Product Description</label>
+            <input type="text" class="form-control" id="ProductDescription" name="ProductDescription" placeholder="Enter Per Product Description" required >
+        </div>
+    
+        
+        <div class="form-group">
+            <label for="ProductImage">Product Image</label>
+            <input type="file" class="form-control" id="ProductImage" name="ProductImage"  required >
+        </div>
+        
+        
+        
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    <div>
+
+    </div>
+
+
+</div>
+
+
+
+{% endblock %}

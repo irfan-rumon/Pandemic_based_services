@@ -8,7 +8,8 @@
 
 
 <!-- signUp form -->
-<form action="{{ url_for('auth.postSignup') }}" method="POST" >
+<div class="m-2">
+  <form action="{{ url_for('auth.postSignup') }}" method="POST" >
     <div class="form-group">
         <label for="UserName">Name</label>
         <input type="text" class="form-control" id="UserName" name="UserName" placeholder="Enter Name" required >
@@ -30,6 +31,7 @@
     
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+</div>
 
 
 

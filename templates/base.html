@@ -32,92 +32,102 @@
 
 
     {% endblock %}
+
+    <styles>
+       
+    </styles>
+   
 </head>
-<body class="mr-auto">
+<body >
 
- <div id="page-container">
-     <div id="content-wrap">
-        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button bg-primary">
-            <div class="container"><a class="navbar-brand" href="#"><strong>Pandemic Essentials</strong></a><button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div
-                    class="collapse navbar-collapse" id="navcol-1">
-                    <ul class="nav navbar-nav mr-auto">
-                        <li role="presentation" class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">Home</a></li>
-                        {% if session.UserEmail %}
-                        <li role="presentation" class="nav-item"><a class="nav-link" href="#">User Profile</a></li>
-                        
-                        {% if session.UserRole == 'admin'%}
-                        <li role="presentation" class="nav-item"><a class="nav-link" href="#">Admin DashBoard</a></li>
-                        {% endif %}
-                        {% endif %}
-                        <li class="dropdown nav-item"><a data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle nav-link" href="#">Services</a>
-                            <div role="menu" class="dropdown-menu">
-                                <a role="presentation" class="dropdown-item" href="#">E-Commerce</a>
-                                <a role="presentation" class="dropdown-item" href="#">Home nursing service</a>
-                                <a role="presentation" class="dropdown-item" href="#">Ambulance service </a>
-                                <a role="presentation" class="dropdown-item" href="#">Burial and funeral service</a>
-                                <a role="presentation" class="dropdown-item" href="#">Covid19 test sample collection from home</a>
-                                <a role="presentation" class="dropdown-item" href="#">Fitness and Nutrition coach guideline service</a>
-                            </div>
-                        </li>
-                    </ul><span class="navbar-text actions">
-                        {% if session.UserEmail %}
-                        <a class="login" href="{{ url_for('auth.getLogout') }}">Log out</a>
-                        {% else %}
-                        <a class="login mr-1" href="{{ url_for('auth.getLogin') }}">Log In</a>
-                        <a class="btn btn-light action-button" role="button" href="{{ url_for('auth.getSignup') }}">Sign Up</a></span></div>
-                        {% endif %}
-            </div>
-        </nav>
-     
-      <!-- Flash message Div    -->
-    <Div class="m-3 p-3">
-           
-    
-        <!-- flash messages -->
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-       {% for message in messages %}
-       <div class="alert alert-danger  " role="alert">
-        {{ message }}
-      </div>
-          
-       {% endfor %}
-    {% endif %}
-    {% endwith %}
-    
-    </Div>
-    
-    
-    
-    
-    
-        {% block body %}
-    
-        {% endblock %}
-    
-    
+ <div class="container-flued" >
+    <div id="">
         
-    
+            <nav class="navbar navbar-light navbar-expand-md navigation-clean-button bg-primary">
+                <div class="container"><a class="navbar-brand" href="#"><strong>Pandemic Essentials</strong></a><button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                    <div
+                        class="collapse navbar-collapse" id="navcol-1">
+                        <ul class="nav navbar-nav mr-auto">
+                            <li role="presentation" class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">Home</a></li>
+                            {% if session.UserEmail %}
+                            <li role="presentation" class="nav-item"><a class="nav-link" href="#">User Profile</a></li>
+                            
+                            {% if session.UserRole == 'admin'%}
+                            <li role="presentation" class="nav-item"><a class="nav-link" href="#">Admin DashBoard</a></li>
+                            {% endif %}
+                            {% endif %}
+                            <li class="dropdown nav-item"><a data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle nav-link" href="#">Services</a>
+                                <div role="menu" class="dropdown-menu">
+                                    <a role="presentation" class="dropdown-item" href="#">E-Commerce</a>
+                                    <a role="presentation" class="dropdown-item" href="#">Home nursing service</a>
+                                    <a role="presentation" class="dropdown-item" href="#">Ambulance service </a>
+                                    <a role="presentation" class="dropdown-item" href="#">Burial and funeral service</a>
+                                    <a role="presentation" class="dropdown-item" href="#">Covid19 test sample collection from home</a>
+                                    <a role="presentation" class="dropdown-item" href="#">Fitness and Nutrition coach guideline service</a>
+                                </div>
+                            </li>
+                        </ul><span class="navbar-text actions">
+                            {% if session.UserEmail %}
+                            <a class="login" href="{{ url_for('auth.getLogout') }}">Log out</a>
+                            {% else %}
+                            <a class="login mr-1" href="{{ url_for('auth.getLogin') }}">Log In</a>
+                            <a class="btn btn-light action-button" role="button" href="{{ url_for('auth.getSignup') }}">Sign Up</a></span></div>
+                            {% endif %}
+                </div>
+            </nav>
+         
+          <!-- Flash message Div    -->
+        <Div class="m-3 p-3">
+               
         
-    
-    
-    
-     </div>
-
-     <div id="footer" class="footer-basic">
-        <footer class="bg-dark text-primary">
+            <!-- flash messages -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+           {% for message in messages %}
+           <div class="alert alert-danger  " role="alert">
+            {{ message }}
+          </div>
+              
+           {% endfor %}
+        {% endif %}
+        {% endwith %}
+        
+        </Div>
+        
+        
+        
+        
+        
+            {% block body %}
+        
+            {% endblock %}
+        
+        
             
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="{{ url_for('index') }}">Home</a></li>
-                <li class="list-inline-item"><a href="{{ url_for('index') }}">Services</a></li>
-                <li class="list-inline-item"><a href="#">About</a></li>
-                <li class="list-inline-item"><a href="#">Terms</a></li>
-                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
-            </ul>
-            <p class="copyright">Pandemic Essentials © 2020</p>
-        </footer>
+        
+            
+        
+        
+        
+         
     </div>
+
+     <!-- <div id="footer">
+        <div  class="footer-basic fixed-bottom ">
+            <footer class="bg-dark text-primary">
+                
+                <ul class="list-inline">
+                    <li class="list-inline-item"><a href="{{ url_for('index') }}">Home</a></li>
+                    <li class="list-inline-item"><a href="{{ url_for('index') }}">Services</a></li>
+                    <li class="list-inline-item"><a href="#">About</a></li>
+                    <li class="list-inline-item"><a href="#">Terms</a></li>
+                    <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+                </ul>
+                
+                <p class="copyright">Pandemic Essentials © 2020</p>
+            </footer>
+        </div>
+     </div> -->
  </div>
 </body>
 
