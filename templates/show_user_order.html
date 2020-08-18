@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Show user orders{% endblock %}
+
+
+{% block body %}
+
+     <h5>User order details:</h5>
+     {% for order in orders %}
+         {{   order   }}
+        <br>
+     {% endfor %}
+
+{% endblock %}
