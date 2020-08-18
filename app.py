@@ -50,6 +50,10 @@ def increaseProduct():
 def getAllProducts():
 	return productDb.get_all_products()
 
+@app.route('/getAllUserOrders_test')
+def getAllUserOrders():
+	return productDb.get_all_user_orders(user_email="irfannisho8571@gmail.com")	
+
 
 @app.route('/addUserOrder_test')
 def addUserOrder():
