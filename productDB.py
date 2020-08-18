@@ -1,5 +1,7 @@
 from mongoengine import *
-from flask import Flask, render_template, request, redirect, Blueprint
+from flask import *
+import datetime
+import time
 
 class Product(Document):
 	product_name = StringField(max_length=100)
@@ -21,7 +23,7 @@ class UserOder(Document):
 	product_Id = StringField(max_length=1000)
 	product_amount = IntField()
 	total_price = FloatField()
-	date = DateField()    
+	date = DateTimeField(required=True, default=datetime.datetime.utcnow)   
 
 
 class ProductDb():
@@ -69,7 +71,21 @@ class ProductDb():
 		return {"Success" : True}              #successfully added the user_order
 
 
-
+	def get_all_user_orders(self, user_email):
+		#returne users all orders details  with all feild in a list of dictionary  [{}, {} ]
+		orders = UserOder.objects(user_email=user_email)                     #getting all user orders
+		ordersList = []                                 #list to store order details
+		for order in orders:                         #looping through all orders
+			orderDict = {                              #creating a dictionary for each order
+				'_id': str(order.pk),
+				'user_email': order.user_email,
+				'product_Id': order.product_Id,
+				'product_amount': order.product_amount,
+				'total_price': order.total_price,
+				'date' : order.date
+			}
+			ordersList.append(orderDict)
+		return render_template('show_user_order.html', orders = ordersList)	
 
 
 
