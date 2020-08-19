@@ -53,7 +53,7 @@ def getAllProducts():
 
 @app.route('/getAllUserOrders_test')
 def getAllUserOrders():
-	productsList = productDb.get_all_user_orders()
+	orderssList = productDb.get_all_user_orders(user_email="irfannisho8571@gmail.com")
 	return render_template('show_user_order.html', orders = orderssList)
     
 

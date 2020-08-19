@@ -62,7 +62,13 @@ class ProductDb():
 				'product.description' : product.product_description
 			}
 			productsList.append(productDict)
-		return render_template('show_products.html', products = productsList)	
+		return {
+			"Success" : True,
+			"products": productsList
+		}
+		
+		
+		 	
 
 	def add_user_order(self, user_email, product_Id, product_amount, total_price, date):
 		# add new record to UserOrder table with these arguments
