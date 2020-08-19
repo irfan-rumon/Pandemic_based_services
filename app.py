@@ -48,12 +48,14 @@ def increaseProduct():
 
 @app.route('/getAllProducts_test')
 def getAllProducts():
-	return productDb.get_all_products()
+	productsList = productDb.get_all_products()
+	return render_template('show_products.html', products = productsList)
 
 @app.route('/getAllUserOrders_test')
 def getAllUserOrders():
-	return productDb.get_all_user_orders(user_email="irfannisho8571@gmail.com")	
-
+	productsList = productDb.get_all_user_orders()
+	return render_template('show_user_order.html', orders = orderssList)
+    
 
 @app.route('/addUserOrder_test')
 def addUserOrder():
