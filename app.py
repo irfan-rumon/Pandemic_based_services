@@ -48,7 +48,9 @@ def increaseProduct():
 
 @app.route('/getAllProducts_test')
 def getAllProducts():
-	return productDb.get_all_products()
+	productsList = productDb.get_all_products()
+	 
+	return render_template('show_products.html', products = productsList)
 
 @app.route('/getAllUserOrders_test')
 def getAllUserOrders():
