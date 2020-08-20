@@ -33,8 +33,8 @@ productDb = ProductDb()
 
 @app.route('/')
 def index():
-	
 	return render_template("home.html")
+
 
 @app.route('/addProduct_test')
 def addProduct():
@@ -51,16 +51,21 @@ def getAllProducts():
 	productsList = productDb.get_all_products()
 	return render_template('show_products.html', products = productsList)
 
-@app.route('/getAllUserOrders_test')
-def getAllUserOrders():
-	orderssList = productDb.get_all_user_orders(user_email="irfannisho8571@gmail.com")
-	return render_template('show_user_order.html', orders = orderssList)
-    
 
 @app.route('/addUserOrder_test')
 def addUserOrder():
 	return productDb.add_user_order(user_email="irfannisho8571@gmail.com", product_Id="5f2e893cb21bfbc8153df3c8", product_amount = 2, total_price=50, date=datetime.datetime.utcnow)
 
 
+@app.route('/getAllUserOrders_test')
+def getAllUserOrders():
+	ordersList = productDb.get_all_user_orders(user_email="irfannisho8571@gmail.com")
+	return render_template('show_user_order.html', orders = ordersList)
+
+
+@app.route('/addUserCart_test')
+def addUserCart():
+	return productDb.add_to_cart(user_email="irfannisho8571@gmail.com", product_Id="5f2e893cb21bfbc8153df3c8", product_amount=10, total_price=500.00)	
+	
 if __name__ == "__main__":
 	app.run(debug=True)    
