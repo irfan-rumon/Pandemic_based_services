@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}shop{% endblock %}
+
+
+{% block body %}
+
+
+
+<div >
+ 
+    <div class="container p-3 mb-5">
+      <div class = "row">
+
+        {% for product in products %}
+    
+    
+    
+    <div class = "col-sm-12 col-md-6 col-lg-4 p-3 ">             
+      <div class="card space  h-100  space"  >
+      
+        
+       
+          <img class="card-img-top img-responsive" src="/static/img/{{product['product_image']}}" alt="product image" height="300" >
+           
+          
+        
+          <div class="card-header">
+             <h2 class="text-center">{{product['product_name']}}</h2>
+             <h4 class=""> price:  {{product['per_unit_charge']}}</h4>
+            </div>
+       
+      
+      <div class="card-footer text-center">
+
+                
+      
+              
+         <button > <a href="{{ url_for('shop.getProductDetails', product_Id=product['_id'] ) }}" class="nav-item nav-link">Details</a></button>
+         
+            
+          
+                 </div>
+                
+             </div>
+           </div>
+    
+   {% endfor %}
+    </div>
+    </div>
+
+ 
+  
+</div>
+
+
+
+
+
+{% endblock %}

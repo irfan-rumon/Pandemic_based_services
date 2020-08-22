@@ -24,7 +24,7 @@ configure_uploads(app,photos)
 app.register_blueprint(auth, url_prefix="/auth")
 app.register_blueprint(test, url_prefix="/test")
 app.register_blueprint(admin, url_prefix="/admin")
-app.register_blueprint(test, url_prefix="/shop")
+app.register_blueprint(shop, url_prefix="/shop")
 
 connect(db='cse499', host='localhost', port=27017)
 
