@@ -66,6 +66,10 @@ def getAllUserOrders():
 @app.route('/addUserCart_test')
 def addUserCart():
 	return productDb.add_to_cart(user_email="irfannisho8571@gmail.com", product_Id="5f2e893cb21bfbc8153df3c8", product_amount=10, total_price=500.00)	
-	
+
+@app.route('/removeFromCart_test')
+def removeFromCart():
+	return productDb.remove_from_cart(user_email="irfannisho8571@gmail.com", product_Id="5f2e893cb21bfbc8153df3c8")
+
 if __name__ == "__main__":
 	app.run(debug=True)    
