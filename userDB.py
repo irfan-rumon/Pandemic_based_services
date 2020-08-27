@@ -57,5 +57,3 @@ class UserGeneralDb():
                      "userRole" : currentUser[0].role
                    }  
        
-
-

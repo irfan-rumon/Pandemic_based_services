@@ -9,8 +9,8 @@ test = Blueprint("test",__name__, static_folder="static", template_folder="templ
 
 
 @test.route("/demo", methods =["GET"])
-@is_loggedIn    # cheking if the user is logged in
-@has_permission('customer','admin') #checking if user has permisson for this route
+@is_loggedIn                               # cheking if the user is logged in
+@has_permission('customer','admin')        #checking if user has permisson for this route
 def demo():
     # userEmail =  session['UserEmail']
     # print(userEmail)
