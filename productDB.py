@@ -126,7 +126,21 @@ class ProductDb():
 				user_cart.save()
 				return {"Success": True}
 		else:
-			return {"Success":False}		
+			return {"Success":False}
+
+	
+	def remove_from_cart(self, user_email,product_Id):
+		user_cart = UserCart.objects(user_email=user_email, product_Id=product_Id) 
+		product_amount = user_cart[0].product_amount                             #getting the product_amount from cart table
+		addition = self.increase_product(productId=product_Id, amount=product_amount)               #adding it to product by calling increase_product() method
+		if len(user_cart) > 0:
+		    user_cart.delete()                                                    #then delete the record
+		return {"Success": True}
+
+
+
+
+
 
 
 
