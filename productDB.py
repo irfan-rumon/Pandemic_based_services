@@ -59,11 +59,32 @@ class ProductDb():
 				'available_unit': product.available_unit,
 				'per_unit_charge': product.per_unit_charge,
 				'product_image': product.product_image,
-				'product.description' : product.product_description
+				'product_description' : product.product_description
 			}
 			productsList.append(productDict)
 		return productsList
 		
+		
+	def get_singelProduct(self,productId):
+		product = Product.objects(pk = productId )
+		productDict = {}
+		if product:
+			product = product.get(pk = productId )   
+			productDict = {
+				'_id': str(product.pk),
+				'product_name': product.product_name,
+				'available_unit': product.available_unit,
+				'per_unit_charge': product.per_unit_charge,
+				'product_image': product.product_image,
+				'product_description' : product.product_description
+			} 
+
+		return {
+			"Success" : True,
+			"product": productDict
+		}   
+		
+
 
 	def add_user_order(self, user_email, product_Id, product_amount, total_price, date):
 		# add new record to UserOrder table with these arguments
