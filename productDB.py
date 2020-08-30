@@ -88,7 +88,7 @@ class ProductDb():
 		
 
 
-	def add_user_order(self, user_email, product_Id,product_name, product_amount, total_price, date):
+	def add_user_order(self, user_email, product_Id, product_name, product_amount, total_price, date):
 		# add new record to UserOrder table with these arguments
 		user_order = UserOder(user_email=user_email, product_Id=product_Id,product_name=product_name, product_amount=product_amount, total_price=total_price, date=date)
 		user_order.save()
@@ -113,7 +113,7 @@ class ProductDb():
 		return ordersList	
 	
 
-	def add_to_cart(self, user_email, product_Id,product_name, product_amount, total_price):
+	def add_to_cart(self, user_email, product_Id, product_name, product_amount, total_price):
 		product = Product.objects(pk = product_Id)                                          #searching the product with that product_Id 
 		if product:
 			new_available_unit = product[0].available_unit - product_amount                                                                         #if product exists with that product_id                                                 
@@ -142,6 +142,23 @@ class ProductDb():
 			return {"Success": True}
 		else:
 			return {"Success":False}	
+
+
+	def get_user_cart(self, user_email):
+		carts = UserCart.objects(user_email=user_email)
+		if len(carts) > 0:
+			cartsList = []                                 #list to store cart details
+			for cart in carts:                             #looping through all carts
+				cartDict = {                               #creating a dictionary for each cart
+				   '_id': str(cart.pk),
+				   'user_email': cart.user_email,
+				   'product_Id': cart.product_Id,
+				   'product_name': cart.product_name,
+				   'product_amount': cart.product_amount,
+				   'total_price': cart.total_price,
+				}
+			cartsList.append(cartDict)
+		return cartsList	
 
 
 
