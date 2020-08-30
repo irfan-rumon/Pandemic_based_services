@@ -7,33 +7,33 @@ productDb = ProductDb()
 @shop.route("/getAllProducts", methods =["GET"])
 def getAllProducts():
 
-    productList = productDb.get_all_products()
+	productList = productDb.get_all_products()
 
-    return render_template('allProducts.html',products = productList['products'])
+	return render_template('allProducts.html',products = productList['products'])
 
 
 @shop.route("/getProductDetails/<product_Id>", methods =["GET"] )
 def getProductDetails(product_Id):
 
-    productDetails = productDb.get_singelProduct(product_Id)
-    print(productDetails)
+	productDetails = productDb.get_singelProduct(product_Id)
+	print(productDetails)
 
-    return render_template('productDetail.html',product = productDetails['product'])
+	return render_template('productDetail.html',product = productDetails['product'])
 
 
 
 
 
 @shop.route("/postIncreaseProduct", methods =["POST"] )
-@is_loggedIn    
-@has_permission('admin') 
+#@is_loggedIn  
+#@has_permission('admin') 
 def postIncreaseProduct():
 
-    product_Id  = request.form.get('id')
-    amount = request.form.get('amount')
-    amount = int(amount)
+	product_Id  = request.form.get('id')
+	amount = request.form.get('amount')
+	amount = int(amount)
 
-    productDb.increase_product(productId=product_Id, amount=amount)
-    
+	productDb.increase_product(productId=product_Id, amount=amount)
+	
 
-    return redirect(url_for('shop.getProductDetails', product_Id=product_Id ))
+	return redirect(url_for('shop.getProductDetails', product_Id=product_Id ))
