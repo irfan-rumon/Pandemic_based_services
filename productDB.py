@@ -14,6 +14,7 @@ class Product(Document):
 class UserCart(Document): 
 	user_email = EmailField(required=True)
 	product_Id = StringField(max_length=1000)
+	product_name = StringField(max_length=100)
 	product_amount = IntField()
 	total_price = FloatField()
 
@@ -21,6 +22,7 @@ class UserCart(Document):
 class UserOder(Document):
 	user_email = EmailField(required=True) 
 	product_Id = StringField(max_length=1000)
+	product_name = StringField(max_length=100)
 	product_amount = IntField()
 	total_price = FloatField()
 	date = DateTimeField(required=True, default=datetime.datetime.utcnow)   
@@ -65,7 +67,7 @@ class ProductDb():
 		return productsList
 		
 		
-	def get_singelProduct(self,productId):
+	def get_singleProduct(self,productId):
 		product = Product.objects(pk = productId )
 		productDict = {}
 		if product:
@@ -86,9 +88,9 @@ class ProductDb():
 		
 
 
-	def add_user_order(self, user_email, product_Id, product_amount, total_price, date):
+	def add_user_order(self, user_email, product_Id,product_name, product_amount, total_price, date):
 		# add new record to UserOrder table with these arguments
-		user_order = UserOder(user_email=user_email, product_Id=product_Id, product_amount=product_amount, total_price=total_price, date=date)
+		user_order = UserOder(user_email=user_email, product_Id=product_Id,product_name=product_name, product_amount=product_amount, total_price=total_price, date=date)
 		user_order.save()
 		return {"Success" : True}              #successfully added the user_order
 
@@ -102,6 +104,7 @@ class ProductDb():
 				'_id': str(order.pk),
 				'user_email': order.user_email,
 				'product_Id': order.product_Id,
+				'product_name': order.product_name,
 				'product_amount': order.product_amount,
 				'total_price': order.total_price,
 				'date' : order.date
@@ -110,7 +113,7 @@ class ProductDb():
 		return ordersList	
 	
 
-	def add_to_cart(self, user_email, product_Id, product_amount, total_price):
+	def add_to_cart(self, user_email, product_Id,product_name, product_amount, total_price):
 		product = Product.objects(pk = product_Id)                                          #searching the product with that product_Id 
 		if product:
 			new_available_unit = product[0].available_unit - product_amount                                                                         #if product exists with that product_id                                                 
@@ -122,11 +125,12 @@ class ProductDb():
 				user_cart.update(product_amount = new_product_amount, total_price = new_total_price)        #adding product_amount and total price with that record
 				return {"Success": True}
 			else:                                                                                           #if user_cart is not present
-				user_cart = UserCart(user_email=user_email, product_Id=product_Id, product_amount=product_amount, total_price=total_price)	 
+				user_cart = UserCart(user_email=user_email, product_Id=product_Id,product_name=product_name, product_amount=product_amount, total_price=total_price)	 
 				user_cart.save()
 				return {"Success": True}
 		else:
 			return {"Success":False}
+
 
 	
 	def remove_from_cart(self, user_email,product_Id):
