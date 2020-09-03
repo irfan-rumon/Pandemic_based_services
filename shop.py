@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from productDB import ProductDb
 from middleware import is_loggedIn, has_permission 
+from datetime import datetime
+
 shop = Blueprint("shop",__name__, static_folder="static", template_folder="templates")
 
 
@@ -11,7 +13,7 @@ def getAllProducts():
 
 	productList = productDb.get_all_products()
 
-	return render_template('allProducts.html',products = productList['products'])
+	return render_template('allProducts.html',products = productList)
 
 
 @shop.route("/getProductDetails/<product_Id>", methods =["GET"] )
@@ -39,3 +41,93 @@ def postIncreaseProduct():
 	
 
 	return redirect(url_for('shop.getProductDetails', product_Id=product_Id ))
+
+
+
+
+@shop.route("/getAddToCart/<product_Id>/<product_amount>", methods =["GET"])
+@is_loggedIn    
+def getAddToCart(product_Id,product_amount):
+
+    productDetails = productDb.get_singleProduct(product_Id)
+
+    product_name = productDetails['product_name']
+    total_price = productDetails['per_unit_charge'] * product_amount
+
+    try:
+
+        result = productDb.add_to_cart(
+            user_email= session['UserEmail'],
+            product_Id= product_Id,
+            product_name=product_name,
+            product_amount=product_amount,
+            total_price=total_price)
+        if result["Success"]:
+            flash("Added to Cart") 
+    except Exception as e:
+        flash("Error Try again") 
+
+    return redirect(url_for('shop.getAllProducts'))
+
+
+
+@shop.route("/getRemoveFromCart/<product_Id>", methods =["GET"])
+@is_loggedIn    
+def getRemoveFromCart(product_Id):
+
+    try:
+        result = productDb.remove_from_cart(user_email= session['UserEmail'], product_Id=product_Id)
+
+        if result["Success"] :
+                flash("Added to Cart") 
+    except Exception as e:
+        flash("Error Try again") 
+
+    return redirect(url_for('shop.getAllProducts'))
+
+
+
+
+@shop.route("/getUserCart", methods =["GET"])
+ 
+def getUserCart():
+
+   
+    result = productDb.get_user_cart(user_email=session['UserEmail'] )
+
+    return render_template("####", cartItems = result)   # tempalte is not added
+
+
+
+
+@shop.route("/getAddOrder", methods =["GET"])
+ 
+def getAddOrder():
+
+    result = productDb.get_user_cart(user_email=session['UserEmail'] )
+    now = datetime.now()
+    name = now.strftime("%m%d%Y%H%M%S") 
+
+
+    for item in result:
+
+        temp = productDb.add_user_order(
+            user_email = session['UserEmail'],
+            product_Id =item['product_Id'] ,
+            product_name = item["product_name"], 
+            product_amount = item["product_amount"], 
+            total_price = item["total_price"], 
+            date = str(now)
+            )
+
+    return return redirect(url_for('shop.getAllProducts'))
+
+
+
+@shop.route("/getUsersAllOrder", methods =["GET"])
+ 
+def getUsersAllOrder():
+
+    UserOrders =  ProductDb.get_all_user_orders(user_email=session['UserEmail'])
+
+    return render_template("####", userOrders = UserOrders)   # tempalte is not added
