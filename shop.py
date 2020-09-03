@@ -95,7 +95,7 @@ def getUserCart():
    
     result = productDb.get_user_cart(user_email=session['UserEmail'] )
 
-    return render_template("####", cartItems = result)   # tempalte is not added
+    return render_template("####", cartItems = result)   # template is not added
 
 
 
@@ -130,4 +130,4 @@ def getUsersAllOrder():
 
     UserOrders =  ProductDb.get_all_user_orders(user_email=session['UserEmail'])
 
-    return render_template("####", userOrders = UserOrders)   # tempalte is not added
+    return render_template("####", userOrders = UserOrders)   # template is not added
