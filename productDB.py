@@ -42,10 +42,13 @@ class ProductDb():
 	def increase_product(self, productId, amount): 
 		#add  amount to availabe_unit field for given productId to product table
 		product = Product.objects(pk = productId )
-		if product:                                     #product found with that productId 
+		
+		if product:    
+			                              #product found with that productId 
 			product = product.get(pk = productId )
 			newAmount = product.available_unit + amount
 			product.update(available_unit = newAmount)
+			
 			return {"Success" : True}                   #successfully incresed amount of that product
 		else:                                           #No product found with that productId
 			return {"Success" : False}
@@ -92,6 +95,12 @@ class ProductDb():
 		# add new record to UserOrder table with these arguments
 		user_order = UserOder(user_email=user_email, product_Id=product_Id,product_name=product_name, product_amount=product_amount, total_price=total_price, date=date)
 		user_order.save()
+
+		user_cart = UserCart.objects(user_email=user_email) 		
+		user_cart = user_cart.get(product_Id = product_Id) 
+		user_cart.delete()
+
+		
 		return {"Success" : True}              #successfully added the user_order
 
 
@@ -114,15 +123,22 @@ class ProductDb():
 	
 
 	def add_to_cart(self, user_email, product_Id, product_name, product_amount, total_price):
+		
+
 		product = Product.objects(pk = product_Id)                                          #searching the product with that product_Id 
+		
+		
 		if product:
+			
 			new_available_unit = product[0].available_unit - product_amount                                                                         #if product exists with that product_id                                                 
-			product.update(available_unit = new_available_unit)
+			
+			product[0].update(available_unit = new_available_unit)
+			
 			user_cart = UserCart.objects(user_email = user_email, product_Id = product_Id ) #searching if any  record is present with same user_email and product_Id  in cart table 
 			if user_cart:
 				new_product_amount = user_cart[0].product_amount + product_amount
 				new_total_price = user_cart[0].total_price + total_price                                                                   #if this cart is already present                                                                            
-				user_cart.update(product_amount = new_product_amount, total_price = new_total_price)        #adding product_amount and total price with that record
+				user_cart[0].update(product_amount = new_product_amount, total_price = new_total_price)        #adding product_amount and total price with that record
 				return {"Success": True}
 			else:                                                                                           #if user_cart is not present
 				user_cart = UserCart(user_email=user_email, product_Id=product_Id,product_name=product_name, product_amount=product_amount, total_price=total_price)	 
@@ -134,20 +150,29 @@ class ProductDb():
 
 	
 	def remove_from_cart(self, user_email,product_Id):
-		user_cart = UserCart.objects(user_email=user_email, product_Id=product_Id)                            
+
+		
+		user_cart = UserCart.objects(user_email=user_email) 
+		
+		user_cart = user_cart.get( pk = product_Id) 
+		
 		if len(user_cart) > 0:
-			product_amount = user_cart[0].product_amount               #getting the product_amount from cart table
+			product_amount = user_cart.product_amount 
+			real_product_Id = user_cart.product_Id              #getting the product_amount from cart table
 			user_cart.delete()
-			reIncreasingProduct = self.increase_product(productId=product_Id, amount=product_amount)      #adding it to product by calling increase_product() method                                              #then delete the record
-			return {"Success": True}
+			
+			
+			reIncreasingProduct = self.increase_product(productId=real_product_Id  , amount=product_amount)      #adding it to product by calling increase_product() method                                              #then delete the record
+			return {"Success": reIncreasingProduct["Success"]}
 		else:
 			return {"Success":False}	
 
 
 	def get_user_cart(self, user_email):
 		carts = UserCart.objects(user_email=user_email)
+		cartsList = []
 		if len(carts) > 0:
-			cartsList = []                                 #list to store cart details
+			                                 			   #list to store cart details
 			for cart in carts:                             #looping through all carts
 				cartDict = {                               #creating a dictionary for each cart
 				   '_id': str(cart.pk),
@@ -157,7 +182,7 @@ class ProductDb():
 				   'product_amount': cart.product_amount,
 				   'total_price': cart.total_price,
 				}
-			cartsList.append(cartDict)
+				cartsList.append(cartDict)
 		return cartsList	
 
 

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+
+
+{% block title %}Home{% endblock %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{{ url_for('static',filename= 'styles/cart.css' )}}">
+
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="container mt-4" id="cart-container">
+        <h3 class="text-center my-5">Your Cart List</h3>
+
+        {% for item in cartItems %}
+
+        <div class="row border-bottom py-3">
+            <div class="col-7">
+                <h5>{{ item["product_name"] }}</h5>
+                <span class="ml-3">Quantity: {{ item["product_amount"] }} </span>
+            </div>
+            <div class="col-3 d-flex align-items-center border-left border-right">
+               <span> Total Price : <span class="font-weight-bold"><span style="font-size: 1.5rem; font-weight: 900;">&#2547</span> {{ item["total_price"] }}</span></span>
+            </div>
+            <div class="col-2 d-flex align-items-center">
+                <button class="btn btn-danger">
+                    <a href="{{ url_for('shop.getRemoveFromCart', product_Id=item['_id'] ) }}" >Remove</a>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- <div class="row border-bottom py-3">
+            <div class="col-7">
+                <h5>#2: It is Now Simply Dummy: Product Title Will Appear Here</h5>
+                <span class="ml-3">Quantity: 2</span>
+            </div>
+            <div class="col-3 d-flex align-items-center border-left border-right">
+               <span> Total Price : <span class="font-weight-bold"><span style="font-size: 1.5rem; font-weight: 900;">&#2547</span> 200</span></span>
+            </div>
+            <div class="col-2 d-flex align-items-center">
+                <button class="btn btn-danger">Remove</button>
+            </div>
+        </div>
+        <div class="row border-bottom py-3">
+            <div class="col-7">
+                <h5>#3: It is Now Simply Dummy: Product Title Will Appear Here</h5>
+                <span class="ml-3">Quantity: 2</span>
+            </div>
+            <div class="col-3 d-flex align-items-center border-left border-right">
+               <span> Total Price : <span class="font-weight-bold"><span style="font-size: 1.5rem; font-weight: 900;">&#2547</span> 200</span></span>
+            </div>
+            <div class="col-2 d-flex align-items-center">
+                <button class="btn btn-danger">Remove</button>
+            </div>
+        </div>-->
+        <div class="row py-2">
+            <div class="col-3 offset-7 d-flex align-items-center border-left border-right">
+               <span class="font-weight-bold">Total Amount : <span style="font-size: 1.5rem; font-weight: 900;">&#2547</span> {{total_amount}}</span>
+            </div>
+        </div> 
+
+        {% if cartItems|length > 0 %} 
+        <div class="text-center my-5">
+           <form action="" class="form">
+            <select name="" id="payment-dropdown" class="form-control-sm"> 
+                <option value="">Cash On delevery</option>
+                <option value="">Bkash</option>
+                <option value="">DBBL</option>
+                <option value="">Nagad</option>
+            </select>
+            <button class="btn btn-success"><a  href="{{ url_for('shop.getAddOrder') }}">Order Now</a></button>
+           </form>
+        </div>
+        {% endif %}
+    </div>
+   
+    {% endblock %}

@@ -1,36 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% block head %}
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
 
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="https://anandchowdhary.github.io/ionicons-3-cdn/icons.css" integrity="sha384-+iqgM+tGle5wS+uPwXzIjZS5v6VkqCUV7YQ/e/clzRHAxYbzpUJ+nldylmtBWCP0" crossorigin="anonymous">
-
+    
 
     <!--Footer css -->
-    <link rel="stylesheet" href="{{ url_for('static',filename= 'styles/Footer-Basic.css' )}}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static',filename= 'styles/Footer-Basic.css' )}}"> -->
 
      <!--Main css -->
-     <link rel="stylesheet" href="{{ url_for('static',filename= 'styles/main.css' )}}">
+     <!-- <link rel="stylesheet" href="{{ url_for('static',filename= 'styles/main.css' )}}"> -->
 
 
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
-
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+    {% block head %}
     {% endblock %}
 
     <styles>
@@ -50,17 +39,34 @@
                         <ul class="nav navbar-nav mr-auto">
                             <li role="presentation" class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">Home</a></li>
                             {% if session.UserEmail %}
-                            <li role="presentation" class="nav-item"><a class="nav-link" href="#">User Profile</a></li>
-                            
+                            <li role="presentation" class="nav-item"><a class="nav-link" href="{{ url_for('shop.getUsersAllOrder') }}">Order history</a></li>
+                            {% endif %}
                             {% if session.UserRole == 'admin'%}
                             <li role="presentation" class="nav-item"><a class="nav-link" href="#">Admin DashBoard</a></li>
-                            {% endif %}
+                           
                             {% endif %}
 
                             {% if session.UserEmail %}
-                            <li role="presentation" class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">CART</a></li>
+                            <li role="presentation" class="nav-item"><a class="nav-link active" href="{{ url_for('shop.getUserCart') }}">CART</a></li>
                             {% endif %}
-                            <li class="dropdown nav-item"><a data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle nav-link" href="#">Services</a>
+                            
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                    Services
+                                </button>
+                                <ul class="dropdown-menu">
+                                  <li><a role="presentation" class="dropdown-item" href="{{ url_for('shop.getAllProducts') }}">Shop</a></li>
+                                  <li><a role="presentation" class="dropdown-item" href="#">Home nursing service</a></li>
+                                  <li> <a role="presentation" class="dropdown-item" href="#">Ambulance service </a></li>
+                                  <li><a role="presentation" class="dropdown-item" href="#">Burial and funeral service</a></li>
+                                  <li> <a role="presentation" class="dropdown-item" href="#">Covid19 test sample collection </a></li>
+                                  <li><a role="presentation" class="dropdown-item" href="#">Fitness and Nutrition guideline </a></li>
+                                </ul>
+                              </div>
+
+
+
+                            <!-- <li class="dropdown nav-item"><a data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle nav-link" href="#">Services</a>
                                 <div role="menu" class="dropdown-menu">
                                     <a role="presentation" class="dropdown-item" href="{{ url_for('shop.getAllProducts') }}">E-Commerce</a>
                                     <a role="presentation" class="dropdown-item" href="#">Home nursing service</a>
@@ -69,7 +75,9 @@
                                     <a role="presentation" class="dropdown-item" href="#">Covid19 test sample collection from home</a>
                                     <a role="presentation" class="dropdown-item" href="#">Fitness and Nutrition coach guideline service</a>
                                 </div>
-                            </li>
+                            </li> -->
+
+
                         </ul><span class="navbar-text actions">
                             {% if session.UserEmail %}
                             <a class="login" href="{{ url_for('auth.getLogout') }}">Log out</a>

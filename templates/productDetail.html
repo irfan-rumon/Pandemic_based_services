@@ -8,7 +8,7 @@
     <img class="card-img-top img-responsive " src="/static/img/{{product['product_image']}}" alt="product image" height="300" >
 
 
-    {% if session.UserRole == 'admin'%}
+    <!-- {% if session.UserRole == 'admin'%} -->
 
     <form action="{{ url_for('shop.postIncreaseProduct') }}" method="post"  >
         <div class="form-group">
@@ -20,26 +20,24 @@
       </form>
 
 
-      {% endif %}
+      <!-- {% endif %} -->
 
-    <!-- {% if session.UserRole == 'admin'%}   -->
-    <hr>
-    <br>
-  <form action="{{ url_for('shop.postIncreaseProduct') }}" method="post"  >
-      <input type="hidden" name = "id"  value = "{{product['_id']}}" >
-      <label for="amount">amount:</label>
-      <input type="number" id =  "amount" name = "amount"    >
-     
-      <button type="submit" name="btndelete" >Increase</button>
-  </form>
- 
-  <!-- {% endif %} -->
+    
 
     <h2 class="text-center mt-3"><b>{{product['product_name']}}</b></h2>
     <h3 class="mt-5"> <b>Available Unit:</b> {{product['available_unit']}}  </h3>
     <h3 class="mt-2"> <b>Per Unit Price:</b> {{product['per_unit_charge']}} BDT  </h3>
     <div>
-        <h3 class="mt-5"> <b>Add to cart:</b> <input type="number"><button>Add</button>  </h3>   
+      <h3 class="mt-5"> <b>Add to cart:</b> </h3>
+      <form action="{{ url_for('shop.postAddToCart') }}" method="POST" >
+        <div class="form-group">
+            <input type="hidden" name = "id"  value = "{{product['_id']}}" >
+            <label for="amount">amount</label>
+            <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount" required >
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <!-- <h3 class="mt-5"> <b>Add to cart:</b> <input type="number"><button>Add</button>  </h3>    -->
     </div>
     <h2 class="text-center mt-3"><b>Description</b></h2>
 

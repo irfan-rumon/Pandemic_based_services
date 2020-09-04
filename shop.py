@@ -18,9 +18,9 @@ def getAllProducts():
 
 @shop.route("/getProductDetails/<product_Id>", methods =["GET"] )
 def getProductDetails(product_Id):
-
-	productDetails = productDb.get_singelProduct(product_Id)
-	print(productDetails)
+    
+	productDetails = productDb.get_singleProduct(product_Id)
+	
 
 	return render_template('productDetail.html',product = productDetails['product'])
 
@@ -45,23 +45,27 @@ def postIncreaseProduct():
 
 
 
-@shop.route("/getAddToCart/<product_Id>/<product_amount>", methods =["GET"])
-@is_loggedIn    
-def getAddToCart(product_Id,product_amount):
+@shop.route("/postAddToCart", methods =["POST"])  
+@is_loggedIn 
+def postAddToCart():
+    product_Id = request.form.get('id')
+    product_amount = request.form.get('amount')
+
 
     productDetails = productDb.get_singleProduct(product_Id)
-
+    productDetails = productDetails["product"]
     product_name = productDetails['product_name']
-    total_price = productDetails['per_unit_charge'] * product_amount
-
+    total_price = productDetails['per_unit_charge'] * int(product_amount)
+    
     try:
 
         result = productDb.add_to_cart(
             user_email= session['UserEmail'],
             product_Id= product_Id,
             product_name=product_name,
-            product_amount=product_amount,
-            total_price=total_price)
+            product_amount=int(product_amount),
+            total_price=total_price
+            )
         if result["Success"]:
             flash("Added to Cart") 
     except Exception as e:
@@ -74,36 +78,42 @@ def getAddToCart(product_Id,product_amount):
 @shop.route("/getRemoveFromCart/<product_Id>", methods =["GET"])
 @is_loggedIn    
 def getRemoveFromCart(product_Id):
+    
 
     try:
+
         result = productDb.remove_from_cart(user_email= session['UserEmail'], product_Id=product_Id)
 
         if result["Success"] :
-                flash("Added to Cart") 
+            flash("Removed from cart") 
     except Exception as e:
         flash("Error Try again") 
+    
 
-    return redirect(url_for('shop.getAllProducts'))
+    return redirect(url_for('shop.getUserCart'))
 
 
 
 
 @shop.route("/getUserCart", methods =["GET"])
- 
+@is_loggedIn  
 def getUserCart():
 
-   
-    result = productDb.get_user_cart(user_email=session['UserEmail'] )
+    total_amount = 0
 
-    return render_template("####", cartItems = result)   # template is not added
+    result = productDb.get_user_cart(user_email=session['UserEmail'] )
+    for item in  result:
+        total_amount  = total_amount + item["total_price"]
+
+    return render_template("cart.html", cartItems = result, total_amount = total_amount)   # template is not added
 
 
 
 
 @shop.route("/getAddOrder", methods =["GET"])
- 
+@is_loggedIn   
 def getAddOrder():
-
+    
     result = productDb.get_user_cart(user_email=session['UserEmail'] )
     now = datetime.now()
     name = now.strftime("%m%d%Y%H%M%S") 
@@ -120,7 +130,8 @@ def getAddOrder():
             date = str(now)
             )
 
-    return return redirect(url_for('shop.getAllProducts'))
+    flash("Your order is received. your products  will be delivered within 3 days")  
+    return  redirect(url_for('shop.getAllProducts'))
 
 
 
@@ -128,6 +139,8 @@ def getAddOrder():
  
 def getUsersAllOrder():
 
-    UserOrders =  ProductDb.get_all_user_orders(user_email=session['UserEmail'])
+    print("In all order method")
 
-    return render_template("####", userOrders = UserOrders)   # template is not added
+    UserOrders =  productDb.get_all_user_orders(user_email  = session['UserEmail'])
+
+    return render_template("orderList.html", userOrders = UserOrders)   # template is not added
