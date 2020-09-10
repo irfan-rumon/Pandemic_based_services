@@ -42,7 +42,7 @@
                             <li role="presentation" class="nav-item"><a class="nav-link" href="{{ url_for('shop.getUsersAllOrder') }}">Order history</a></li>
                             {% endif %}
                             {% if session.UserRole == 'admin'%}
-                            <li role="presentation" class="nav-item"><a class="nav-link" href="#">Admin DashBoard</a></li>
+                            <li role="presentation" class="nav-item"><a class="nav-link" href="{{ url_for('admin.getAdminDashBoard') }}">Admin DashBoard</a></li>
                            
                             {% endif %}
 
@@ -56,7 +56,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                   <li><a role="presentation" class="dropdown-item" href="{{ url_for('shop.getAllProducts') }}">Shop</a></li>
-                                  <li><a role="presentation" class="dropdown-item" href="#">Home nursing service</a></li>
+                                  <li><a role="presentation" class="dropdown-item" href="{{ url_for('homeNurse.getNurseService') }}">Home nursing service</a></li>
                                   <li> <a role="presentation" class="dropdown-item" href="#">Ambulance service </a></li>
                                   <li><a role="presentation" class="dropdown-item" href="#">Burial and funeral service</a></li>
                                   <li> <a role="presentation" class="dropdown-item" href="#">Covid19 test sample collection </a></li>

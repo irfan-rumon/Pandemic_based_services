@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}HomeNursing Service{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h2 class="text-center">Home Nursing Service</h2>
+    <div class="row my-5">
+      <div class="col-6 py-2">
+        <img class="img-fluid w-100" src="/static/img/NursingHomeCare.jpg" alt="nursing-img">
+      </div>
+      <div class="col-6">
+        <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. A, iure quasi perferendis delectus ipsam velit corrupti adipisci incidunt inventore exercitationem laboriosam cumque voluptates assumenda quae reiciendis quam repudiandae error provident recusandae rem animi esse maxime. Suscipit, perspiciatis iure ipsa nam impedit nulla. Quis aperiam doloribus, consectetur beatae officiis tempore labore alias quidem accusamus numquam aliquid quasi, nihil distinctio vel fugiat aliquam eveniet laborum ut, ea quas asperiores! Officiis hic ex optio sapiente maiores fuga facilis quam eius assumenda, aperiam voluptatibus quaerat nihil nesciunt at quo corrupti itaque perferendis deserunt nobis asperiores numquam sed? Provident vitae repellat hic officia amet eligendi!</p>
+      </div>
+    </div>
+    <div>
+      <h5 class="text-center mb-3">Select Date and City</h5>
+      <div class="container">
+        <form  class="form" action="{{ url_for('homeNurse.postBookNurs') }}" method="POST" enctype="multipart/form-data">
+         <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <div class="col-2">
+                  <label for="date">Date</label>
+                 </div>
+                  <div class="col-10">
+                    <input class="form-control" type="date" name="date" id="date" required>
+                  </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-2">
+                  <label class="" for="city">City</label>
+                 </div>
+                  <div class="col-10">
+                    <select class="form-control" name="city" id="city">
+                        <option value="dhaka">Dhaka</option>
+                        <option value="rajshahi">Rajshahi</option>
+                        <option value="khulna">Khulna</option>
+                        <option value="chittagong">Chittagong</option>
+                        <option value="barishal">Barishal</option>
+                        <option value="sylhet">Sylhet</option>
+                        <option value="rangpur">Rangpur </option>
+                        <option value="mymensingh">Mymensingh</option>
+                    </select>
+                  </div>
+              </div>
+            </div>
+         </div>
+         <div class="row my-3">
+          <div class="col-2">
+            <label for="address">Address</label>
+           </div>
+            <div class="col-10">
+              <input class="form-control" type="text" name="address" id="address" required>
+            </div>
+        </div>
+         <div class="text-center">
+          <button class="btn btn-success" type="submit">
+            Submit
+          </button>
+         </div>
+        </form>
+      </div>
+      <div>
+        <h5 class="font-weight-bold">Price: 10BDT</h5>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -23,8 +23,6 @@ def has_permission(*roles):
     def decorator(f):
         @wraps(f)
         def wrapper(*args, **kwds):
-            print(session['UserRole'])
-            print(roles)
             if 'UserRole' not  in session:
                 flash(' User don\'t have permission for this operation ')
                 return redirect(url_for('auth.getLogin'))

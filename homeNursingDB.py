@@ -30,8 +30,8 @@ class HomeNursingDb():
 		return {"Success" : True}
 
 	
-	def nursesNumberInCity(self, city, date):
-		nurses = CitynursesNumber.objects(city=city, date= date)
+	def nursesNumberInCity(self, city):
+		nurses = CitynursesNumber.objects(city=city)
 		return nurses[0].total_nurses          #returns number of nurses in that city
 
 
@@ -41,8 +41,8 @@ class HomeNursingDb():
 		return {"Success" : True}
 
 
-	def get_number_bookedNurses(self, city):  
-		cnt_nurses = BookedNurses.objects(city=city)
+	def get_number_bookedNurses(self, city, date):  
+		cnt_nurses = BookedNurses.objects(city=city, date= date)
 		return len(cnt_nurses)                           #returns number of entries mathched with given city in bookedNurses   
 
 	def remove_bookedNUrse(self, bookedNurse_id ):

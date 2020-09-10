@@ -39,12 +39,49 @@
         
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-    <div>
-
-    </div>
-
+    
 
 </div>
+
+
+<!-- second form start -->
+
+
+<div class="m-2 " >
+    <div class="d-flex justify-content-center">
+        <h3>Add Nurse</h3>
+    </div>
+    <form action="{{ url_for('homeNurse.postAddNurse') }}" method="POST" enctype="multipart/form-data" >
+        <div class="row">
+            <div class="col-2">
+              <label class="" for="city">City:</label>
+             </div>
+              <div class="col-3">
+                <select class="form-control" name="city" id="city">
+                  <option value="dhaka">Dhaka</option>
+                  <option value="rajshahi">Rajshahi</option>
+                  <option value="khulna">Khulna</option>
+                  <option value="chittagong">Chittagong</option>
+                  <option value="barishal">Barishal</option>
+                  <option value="sylhet">Sylhet</option>
+                  <option value="rangpur">Rangpur </option>
+                  <option value="mymensingh">Mymensingh</option>
+                 
+                </select>
+              </div>
+          </div>
+        <div class="form-group">
+          <label for="nurseNumber">Number of Nurse:</label>
+          <input type="number" class="form-control" id="nurseNumber" name="nurseNumber"  placeholder="Enter nurse number" required >
+         
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    
+
+</div>
+
 
 
 

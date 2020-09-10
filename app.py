@@ -12,6 +12,7 @@ from auth import auth
 from test import test
 from admin import admin
 from shop import shop
+from homeNursingRoute import homeNurse
 
 app = Flask(__name__)
 app.secret_key = "abc"  
@@ -26,6 +27,7 @@ app.register_blueprint(auth, url_prefix="/auth")
 app.register_blueprint(test, url_prefix="/test")
 app.register_blueprint(admin, url_prefix="/admin")
 app.register_blueprint(shop, url_prefix="/shop")
+app.register_blueprint(homeNurse, url_prefix="/homeNurse")
 
 connect(db='cse499', host='localhost', port=27017)
 
