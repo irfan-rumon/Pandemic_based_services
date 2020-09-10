@@ -30,8 +30,8 @@ class HomeNursingDb():
 		return {"Success" : True}
 
 	
-	def nursesNumberInCity(self, city):
-		nurses = CitynursesNumber.objects(city=city)
+	def nursesNumberInCity(self, city, date):
+		nurses = CitynursesNumber.objects(city=city, date= date)
 		return nurses[0].total_nurses          #returns number of nurses in that city
 
 
@@ -55,8 +55,8 @@ class HomeNursingDb():
 			 return {"Success" : False}
 
 
-	def get_users_booked_nurses(self, user_email, date):
-		nurses = BookedNurses.objects(user_email=user_email, date=date)    #contains nurses mathched with user_email from bookedNurses  
+	def get_users_booked_nurses(self, user_email):
+		nurses = BookedNurses.objects(user_email=user_email)    #contains nurses mathched with user_email from bookedNurses  
 		nurseList = []                                          #list to store bookednurse details
 
 		for nurse in nurses:
