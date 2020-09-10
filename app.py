@@ -5,6 +5,7 @@ from uploadUtils import photos
 from flask_uploads import  configure_uploads
 
 from productDB import Product, ProductDb
+from homeNursingDB import *
 import datetime
 import time
 from auth import auth
@@ -29,6 +30,7 @@ app.register_blueprint(shop, url_prefix="/shop")
 connect(db='cse499', host='localhost', port=27017)
 
 productDb = ProductDb()
+nurseDb =  HomeNursingDb()
 
 
 @app.route('/')
@@ -75,6 +77,48 @@ def removeFromCart():
 def getUserCart():
 	user_cart =  productDb.get_user_cart(user_email="irfannisho8571@gmail.com")
 	return render_template('cartDetails.html', carts=user_cart)
+
+@app.route('/addNurse_test')
+def addNurse():
+	return nurseDb.add_nurses(city="Rangpur", num=200)
+
+@app.route('/nursesNumberInCity_test')
+def nursesNumberInCity():
+	nurse_cnt = nurseDb.nursesNumberInCity(city="Rangpur")
+	return render_template('nurseDetails.html', cnt=nurse_cnt, func="show_nurse_cnt")
+
+@app.route('/bookNurse_test')
+def bookNurse():
+	return nurseDb.bookNurse(city="Dhaka", user_email="laylaa@gmail.com", address="mirpur-12",  date=datetime.datetime(2020, 7, 7), done=False)
+
+@app.route('/get_number_bookedNurse_test')
+def get_number_bookedNurse():
+	nurse_cnt = nurseDb.get_number_bookedNurses(city="Dhaka")
+	return render_template('nurseDetails.html', cnt=nurse_cnt, func="show_booked_nurse_cnt")
+
+@app.route('/remove_bookedNurse_test')
+def remove_bookedNurse():
+	return nurseDb.remove_bookedNUrse(bookedNurse_id="5f561c2656bd5bfa2e5cb930")	
+
+@app.route('/get_users_booked_nurses_test')
+def get_users_booked_nurses():
+	nurses = nurseDb.get_users_booked_nurses(user_email="laylaa@gmail.com", date=datetime.datetime(2020, 7, 7))
+	return render_template('nurseDetails.html', nurses=nurses, func="show_users_booked_nurse")	
+
+@app.route('/change_pending_bookedNurse_test')
+def change_pending_bookedNurse():
+	return nurseDb.change_pending_bookedNurses(bookedNurse_id="5f562e4c557f5b64828a00e0", done=True)	
+
+@app.route('/get_all_bookedNurse_test')
+def get_all_bookedNurse():
+	nurses = nurseDb.get_all_bookedNurses()
+	return render_template('nurseDetails.html', nurses=nurses, func="show_all_booked_nurse")
+
+@app.route('/get_pending_bookedNurse_test')
+def get_pending_bookedNurse():
+	nurses = nurseDb.get_pending_bookedNurses(bookedNurse_id="5f562e4c557f5b64828a00e0", done=True)
+	return render_template('nurseDetails.html', nurses=nurses, func="show_pending_booked_nurse")	
+
 
 
 if __name__ == "__main__":
