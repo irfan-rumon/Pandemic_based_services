@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Nurse info{% endblock %}
+
+
+{% block body %}
+    {% if func=="show_nurse_cnt" %}
+       Nurse count : {{  cnt  }}
+
+    {% endif %}
+
+    {% if func=="show_booked_nurse_cnt" %}
+        Booked nurse count: {{ cnt }}
+    {% endif %}
+
+    {%if func=="show_pending_booked_nurse" %}
+        {% for nurse in nurses %}  
+             {{ nurse }}
+             <br>
+         {% endfor %}    
+    {% endif %}
+
+    {%if func=="show_all_booked_nurse" %}
+        {% for nurse in nurses %}  
+             {{ nurse }}
+             <br>
+         {% endfor %}    
+    {% endif %}
+
+    {%if func=="show_users_booked_nurse" %}
+        {% for nurse in nurses %}  
+             {{ nurse }}
+             <br>
+         {% endfor %}    
+    {% endif %}
+
+{% endblock %}
