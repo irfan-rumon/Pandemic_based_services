@@ -84,7 +84,7 @@ def addNurse():
 
 @app.route('/nursesNumberInCity_test')
 def nursesNumberInCity():
-	nurse_cnt = nurseDb.nursesNumberInCity(city="Rangpur")
+	nurse_cnt = nurseDb.nursesNumberInCity(city="Rangpur", date=datetime.datetime(2020, 7, 7))
 	return render_template('nurseDetails.html', cnt=nurse_cnt, func="show_nurse_cnt")
 
 @app.route('/bookNurse_test')
@@ -102,7 +102,7 @@ def remove_bookedNurse():
 
 @app.route('/get_users_booked_nurses_test')
 def get_users_booked_nurses():
-	nurses = nurseDb.get_users_booked_nurses(user_email="laylaa@gmail.com", date=datetime.datetime(2020, 7, 7))
+	nurses = nurseDb.get_users_booked_nurses(user_email="laylaa@gmail.com")
 	return render_template('nurseDetails.html', nurses=nurses, func="show_users_booked_nurse")	
 
 @app.route('/change_pending_bookedNurse_test')
