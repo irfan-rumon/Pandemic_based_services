@@ -11,6 +11,7 @@ nurseDb = HomeNursingDb()
 @homeNurse.route("/postAddNurse", methods =["Post"])
 @is_loggedIn    
 @has_permission('admin') 
+
 def postAddNurse():
 
     city = request.form.get('city'),
@@ -80,18 +81,19 @@ def getUsersBookedNurses():
     users_all_nurses = nurseDb.get_users_booked_nurses(user_email=session['UserEmail'])
     print(users_all_nurses)
 
-    return render_template("nurseHomePage.html")
+    return render_template("user_nursing_history.html", Orders = users_all_nurses)
 
 
 # all booked nurses record whose done== false
 @homeNurse.route("/getAllPendingNurses", methods =["GET"])
 @is_loggedIn 
+@has_permission('admin') 
 def getAllPendingNurses():
 
     nurses= nurseDb.get_pending_bookedNurses()
     print(nurses)
 
-    return render_template("nurseHomePage.html")
+    return render_template("admin_nursingPending.html",Orders = nurses)
 
 # remove a booked nurse
 @homeNurse.route("/getRemoveBookedNurses/<nurse_Id>", methods =["GET"])
@@ -106,11 +108,12 @@ def getRemoveBookedNurses(nurse_Id):
 
 
 
-    return render_template("nurseHomePage.html")
+    return redirect(url_for('homeNurse.getNurseService'))
 
 # make done = True to booked Nurse entry
 @homeNurse.route("/getChangeBookedNursesDone/<nurse_Id>", methods =["GET"])
 @is_loggedIn 
+@has_permission('admin') 
 def getChangeBookedNursesDone(nurse_Id):
 
     try:
@@ -121,4 +124,4 @@ def getChangeBookedNursesDone(nurse_Id):
 
 
 
-    return render_template("nurseHomePage.html")
+    return redirect(url_for('homeNurse.getNurseService'))
