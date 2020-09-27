@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+
+
+{% block title %}Pending Orders{% endblock %}
+
+{% block body %}
+<div class="container mt-4" id="cart-container">
+    <h3 class="text-center my-5">Burial and Funeral service order history</h3>
+
+    {% for item in Orders %}
+    <div class="row border-bottom py-3">
+        <div class="col-3">
+            <p><span class="font-weight-bold">User Email: </span> {{ item['user_email'] }}</p>
+        </div>
+        <div class="col-3 d-flex align-items-center border-left border-right">
+           <p><span class="font-weight-bold">Address: </span> {{ item['address'] }}</p>
+        </div>
+        <div class="col-1 d-flex align-items-center border-left border-right">
+        <p><span class="font-weight-bold">City: </span> {{ item['city'] }}</p>
+        </div>
+        <div class="col-2 d-flex align-items-center border-left border-right">
+        <p><span class="font-weight-bold">Date: </span> {{ item['date'] }} </p>
+        </div>
+        <div class="col-1 d-flex align-items-center border-left border-right">
+        <p><span class="font-weight-bold">Status:
+            {% if item['done'] == true  %}
+             </span> done
+             {% else %}
+            </span> not done
+             {% endif %}
+            </p>
+        </div>
+        <div class="col-2 d-flex align-items-center">
+            {% if item['done'] == false  %}
+            <button class="btn btn-danger btn-sm"> <a  href="{{ url_for('fuService.getRemoveFuSevice', Order_Id =item['_id'] ) }}">Remove</a></button>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -13,6 +13,8 @@ from test import test
 from admin import admin
 from shop import shop
 from homeNursingRoute import homeNurse
+from TestSample import testSample
+from funeralService import fuService
 
 app = Flask(__name__)
 app.secret_key = "abc"  
@@ -28,6 +30,9 @@ app.register_blueprint(test, url_prefix="/test")
 app.register_blueprint(admin, url_prefix="/admin")
 app.register_blueprint(shop, url_prefix="/shop")
 app.register_blueprint(homeNurse, url_prefix="/homeNurse")
+app.register_blueprint(testSample, url_prefix="/testSample")
+app.register_blueprint(fuService, url_prefix="/fuService")
+
 
 connect(db='cse499', host='localhost', port=27017)
 

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}HomeNursing Service{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h2 class="text-center">Covid-19 Test Sample Collection Service</h2>
+    <div class="row my-5">
+      <div class="col-6 py-2">
+        <img class="img-fluid w-100" src="/static/img/covid_sample_collection.jpg" alt="sample-img">
+      </div>
+      <div class="col-6">
+        <p class="lead"><b> Are you afraid that you may be affected while going to give the sample  Covid-19 test? Don’t want to go to a gathering. No need to worry anymore. We offer  Home sample collection service.  All you need to give information about your location. Our qualified sample collection volunteer will reach to your place to collect your sample. Please provide accurate information below to collect your sample.   </b> </p>
+      </div>
+    </div>
+    <div>
+      <h5 class="text-center mb-3">Select Date and City</h5>
+      <div class="container">
+        <form  class="form" action="{{ url_for('testSample.postBookSample') }}" method="POST" enctype="multipart/form-data">
+         <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <div class="col-2">
+                  <label for="date">Date</label>
+                 </div>
+                  <div class="col-10">
+                    <input class="form-control" type="date" name="date" id="date" required>
+                  </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-2">
+                  <label class="" for="city">City</label>
+                 </div>
+                  <div class="col-10">
+                    <select class="form-control" name="city" id="city">
+                        <option value="dhaka">Dhaka</option>
+                        <option value="rajshahi">Rajshahi</option>
+                        <option value="khulna">Khulna</option>
+                        <option value="chittagong">Chittagong</option>
+                        <option value="barishal">Barishal</option>
+                        <option value="sylhet">Sylhet</option>
+                        <option value="rangpur">Rangpur </option>
+                        <option value="mymensingh">Mymensingh</option>
+                    </select>
+                  </div>
+              </div>
+            </div>
+         </div>
+         <div class="row my-3">
+          <div class="col-2">
+            <label for="address">Address</label>
+           </div>
+            <div class="col-10">
+              <input class="form-control" type="text" name="address" id="address" required>
+            </div>
+        </div>
+         <div class="text-center">
+          <button class="btn btn-success" type="submit">
+            Submit
+          </button>
+         </div>
+        </form>
+      </div>
+      <div>
+        <h5 class="font-weight-bold">Price: 300 BDT</h5>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

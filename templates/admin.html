@@ -46,6 +46,7 @@
 
 <!-- second form start -->
 
+<!-- nurse service -->
 
 <div class="m-2 " >
     <div class="d-flex justify-content-center">
@@ -81,10 +82,98 @@
       <br>
       
      
-      <a class="btn btn-success action-button text-center" role="button" href="{{ url_for('homeNurse.getAllPendingNurses') }}">PendingNurses</a>
+      <a class="btn btn-success action-button text-center" role="button" href="{{ url_for('homeNurse.getAllPendingNurses') }}">Pending Nurses</a>
       
 
 </div>
+
+
+
+
+<!-- test service -->
+
+<div class="m-2 " >
+  <div class="d-flex justify-content-center">
+      <h3>Add Covid-19 test sample collector</h3>
+  </div>
+  <form action="{{ url_for('testSample.postAddCollector') }}" method="POST" enctype="multipart/form-data" >
+      <div class="row">
+          <div class="col-2">
+            <label class="" for="city">City:</label>
+           </div>
+            <div class="col-3">
+              <select class="form-control" name="city" id="city">
+                <option value="dhaka">Dhaka</option>
+                <option value="rajshahi">Rajshahi</option>
+                <option value="khulna">Khulna</option>
+                <option value="chittagong">Chittagong</option>
+                <option value="barishal">Barishal</option>
+                <option value="sylhet">Sylhet</option>
+                <option value="rangpur">Rangpur </option>
+                <option value="mymensingh">Mymensingh</option>
+               
+              </select>
+            </div>
+        </div>
+      <div class="form-group">
+        <label for="collectorNumber">Number of Collector:</label>
+        <input type="number" class="form-control" id="collectorNumber" name="collectorNumber"  placeholder="Enter collectors number" required >
+       
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+    
+   
+    <a class="btn btn-success action-button text-center" role="button" href="{{ url_for('testSample.getAllPendingTest') }}">Penidng Sample collection</a>
+    
+
+</div>
+
+
+
+ <!-- funeral service -->
+
+<div class="m-2 " >
+  <div class="d-flex justify-content-center">
+      <h3>Add funeral Service volunteer</h3>
+  </div>
+  <form action="{{ url_for('fuService.postAddVolunteer') }}" method="POST" enctype="multipart/form-data" >
+      <div class="row">
+          <div class="col-2">
+            <label class="" for="city">City:</label>
+           </div>
+            <div class="col-3">
+              <select class="form-control" name="city" id="city">
+                <option value="dhaka">Dhaka</option>
+                <option value="rajshahi">Rajshahi</option>
+                <option value="khulna">Khulna</option>
+                <option value="chittagong">Chittagong</option>
+                <option value="barishal">Barishal</option>
+                <option value="sylhet">Sylhet</option>
+                <option value="rangpur">Rangpur </option>
+                <option value="mymensingh">Mymensingh</option>
+               
+              </select>
+            </div>
+        </div>
+      <div class="form-group">
+        <label for="collectorNumber">Number of Collector:</label>
+        <input type="number" class="form-control" id="collectorNumber" name="collectorNumber"  placeholder="Enter collectors number" required >
+       
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+    
+   
+    <a class="btn btn-success action-button text-center" role="button" href="{{ url_for('fuService.getAllPendingFuService') }}">Penidng Funeral Service</a>
+    
+
+</div>
+
 
 
 
