@@ -34,7 +34,7 @@
                         class="collapse navbar-collapse" id="navcol-1">
                         <ul class="nav navbar-nav mr-auto">
                             <li role="presentation" class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">Home</a></li>
-                            {% if session.UserEmail %}
+                            {% if session.UserPhone %}
                             <li role="presentation" class="nav-item"><a class="nav-link" href="{{ url_for('shop.getUsersAllOrder') }}">Order history</a></li>
                             {% endif %}
                             {% if session.UserRole == 'admin'%}
@@ -42,7 +42,7 @@
                            
                             {% endif %}
 
-                            {% if session.UserEmail %}
+                            {% if session.UserPhone %}
                             <li role="presentation" class="nav-item"><a class="nav-link active" href="{{ url_for('shop.getUserCart') }}">CART</a></li>
                             {% endif %}
                             
@@ -75,7 +75,7 @@
 
 
                         </ul><span class="navbar-text actions">
-                            {% if session.UserEmail %}
+                            {% if session.UserPhone %}
                             <a class="login" href="{{ url_for('auth.getLogout') }}">Log out</a>
                             {% else %}
                             <a class="login mr-1" href="{{ url_for('auth.getLogin') }}">Log In</a>

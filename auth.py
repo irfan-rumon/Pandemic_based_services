@@ -23,10 +23,17 @@ def postSignup():
         flash("This Role is not accepted ")
         return redirect(url_for('auth.getSignup'))
 
+    if not request.form.get('UserPhone').isnumeric() :
+        flash("Enter a valid phone Number")
+        return redirect(url_for('auth.getSignup'))
+
+    if  len(request.form.get('UserPhone')) != 11:
+        flash("Enter a valid phone Number")
+        return redirect(url_for('auth.getSignup'))
 
     try:
         
-        success =  authDb.signup(user_name=request.form.get('UserName'),user_email=request.form.get('UserEmail'), user_password=request.form.get('UserPassword'), user_role=request.form.get('UserRole'))
+        success =  authDb.signup(user_name=request.form.get('UserName'),user_phone=request.form.get('UserPhone'), user_password=request.form.get('UserPassword'), user_role=request.form.get('UserRole'))
         if success["success"]:
             flash("You have successfully signed up ")
         else:
@@ -51,11 +58,11 @@ def postLogin():
     print(request.form.get('UserPassword'))
 
     try:
-        LoggedInUser = authDb.login(user_email=request.form.get('UserEmail'), user_password=request.form.get('UserPassword'))
+        LoggedInUser = authDb.login(user_phone=request.form.get('UserPhone'), user_password=request.form.get('UserPassword'))
         print(LoggedInUser['success'] )
         if LoggedInUser['success']:
             print("usermatched")
-            session['UserEmail'] = LoggedInUser['userEmail']
+            session['UserPhone'] = LoggedInUser['userPhone']
             session['UserName'] = LoggedInUser['userName']
             session['UserRole'] = LoggedInUser['userRole']
             return redirect(url_for('index'))
@@ -64,8 +71,9 @@ def postLogin():
     except Exception as e:
         print(str(e))
         pass
-
-
+    
+    
+    
     return redirect(url_for('auth.getLogin'))
 
 
