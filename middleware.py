@@ -8,7 +8,7 @@ def is_loggedIn(f):
 
     @wraps(f)
     def wrapper(*args, **kwds):
-        if 'UserEmail' not  in session:
+        if 'UserPhone' not  in session:
             flash('Please Login First')
             return redirect(url_for('auth.getLogin'))
            
