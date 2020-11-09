@@ -10,10 +10,10 @@ class Nurse(Document):
     charge = IntField()
 
 class Nurse_comment(Document):
-    nurse_phone = StringField(max_length=100)
-    user_phone = StringField(max_length=100)
-    user_name = StringField(max_length=100)
-    comment = StringField(max_length=100)
+	nurse_phone = StringField(max_length=100)
+	user_phone = StringField(max_length=100)
+	user_name = StringField(max_length=100)
+	comment = StringField(max_length=100)
 
 class NurseDb():
     def __init__(self):
@@ -85,9 +85,9 @@ class NurseDb():
                 commentDict = {                              
 				   '_id': str(nurse_comment.pk),
 				   'nurse_phone': nurse_comment.nurse_phone,
-                   'user_phone': nurse_comment.user_phone,
-                   'user_name': nurse_comment.user_name,
-                   'comment': nurse_comment.comment
+				   'user_phone': nurse_comment.user_phone,
+				   'user_name': nurse_comment.user_name,
+				   'comment': nurse_comment.comment
 				}
                 commentList.append(commentDict)
         return commentList  
@@ -97,11 +97,11 @@ class NurseDb():
         comments = Nurse_comment.objects( pk = comment_pk ) 
         comment = comments.get( pk = comment_pk )    
 
-        if len(comment) > 0:
-            comment.delete()
-            return {success: True}
-        else:
-            return {success: False}
+		if len(comment) > 0:
+			comment.delete()
+			return {"success": True}
+		else:
+			return {"success": False}
 
     
    
