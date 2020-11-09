@@ -2,16 +2,57 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from homeNursingDB import HomeNursingDb
 from middleware import is_loggedIn, has_permission 
 from datetime import datetime
+from uploadUtils import photos
+from nurseDB import NurseDb
 
 homeNurse = Blueprint("homeNurse",__name__, static_folder="static", template_folder="templates")
 
-nurseDb = HomeNursingDb()
+# nurseDb = HomeNursingDb()
+
+nurseDb = NurseDb()
+
+
+@homeNurse.route("/getAddNurseinfo", methods =["GET"])
+def getAddNurseinfo():
+    return render_template("nurse_signup.html")
+
+
+@homeNurse.route("/postAddNurseinfo", methods =["POST"])
+def postAddNurseinfo():
+    now = datetime.now()
+    name = now.strftime("%m%d%Y%H%M%S")
+    name = name+ "."
+
+    if 'UserImage' in request.files:
+        filename = photos.save(request.files['UserImage'],name=name)
+
+    try:
+
+        
+        result = nurseDb.addnurses(image=filename,
+        name =session['UserName'] , 
+        phone = str(session['UserPhone']), 
+        area = request.form.get('Area'), 
+        certification_experience = request.form.get('Certification'),
+        charge =int(request.form.get('PerUnitCharge')))
+
+    except Exception as e:
+        print( "exception: " + str(e))
+
+    
+    session.clear()
+    
+    return redirect(url_for('auth.getLogin'))
+    
+
+
+
+# finished till nusring registration 
+
+
 
 
 @homeNurse.route("/postAddNurse", methods =["Post"])
-@is_loggedIn    
-@has_permission('admin') 
-
 def postAddNurse():
 
     city = request.form.get('city'),
@@ -125,3 +166,4 @@ def getChangeBookedNursesDone(nurse_Id):
 
 
     return redirect(url_for('homeNurse.getNurseService'))
+

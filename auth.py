@@ -17,10 +17,10 @@ def postSignup():
     # print(request.form.get('UserName'))
 
     # user Roles  Which can be accepted . 
-    valid_User_Roles = set(['customer',  'admin'])
+    valid_User_Roles = set(['customer',  'admin' ,'nurse'])
     # checking if UserRole is valid from form submisson 
     if request.form.get('UserRole') not in  valid_User_Roles:
-        flash("This Role is not accepted ")
+        flash("This Role is not accepted. Only 'customer',  'admin' ,'nurse' roles are  valid ")
         return redirect(url_for('auth.getSignup'))
 
     if not request.form.get('UserPhone').isnumeric() :
@@ -41,7 +41,14 @@ def postSignup():
     except Exception as e:
         print( "exception: " + str(e))
 
-    
+    session['UserPhone'] = request.form.get('UserPhone')
+    session['UserName'] = request.form.get('UserName')
+    session['UserRole'] = request.form.get('UserRole')
+
+    if success["success"] and request.form.get('UserRole') == 'nurse':
+        return redirect(url_for('homeNurse.getAddNurseinfo'))
+
+
     return redirect(url_for('auth.getSignup'))
 
     
@@ -65,6 +72,9 @@ def postLogin():
             session['UserPhone'] = LoggedInUser['userPhone']
             session['UserName'] = LoggedInUser['userName']
             session['UserRole'] = LoggedInUser['userRole']
+
+            flash("User Role is ={role}".format(role =session['UserRole'] ))
+
             return redirect(url_for('index'))
         else:
             flash("Error during log in .Try again ")
@@ -72,6 +82,7 @@ def postLogin():
         print(str(e))
         pass
     
+     
     
     
     return redirect(url_for('auth.getLogin'))
