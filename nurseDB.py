@@ -97,11 +97,11 @@ class NurseDb():
         comments = Nurse_comment.objects( pk = comment_pk ) 
         comment = comments.get( pk = comment_pk )    
 
-		if len(comment) > 0:
-			comment.delete()
-			return {"success": True}
-		else:
-			return {"success": False}
+        if len(comment) > 0:
+            comment.delete()
+            return {"success": True}
+        else:
+            return {"success": False}
 
     
    
