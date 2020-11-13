@@ -37,7 +37,7 @@ class NurseDb():
 
 
     def get_all_nurses(self):
-        nurses = Nurses.objects()
+        nurses = Nurse.objects()
         nurseList = []
         if len(nurses) > 0:                                 			                                            
             for nurse in nurses:                             
@@ -54,7 +54,7 @@ class NurseDb():
         return nurseList	            
                   
     def get_single_nurse(self, phone):
-        nurses = Nurses.objects(phone = phone)
+        nurses = Nurse.objects(phone = phone)
         nurse_info = [] 
         if nurses:
             nurse = nurses[0]

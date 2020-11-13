@@ -37,6 +37,7 @@ def postAddNurseinfo():
         charge =int(request.form.get('PerUnitCharge')))
 
     except Exception as e:
+        flash("Error try again")
         print( "exception: " + str(e))
 
     
@@ -45,12 +46,78 @@ def postAddNurseinfo():
     return redirect(url_for('auth.getLogin'))
     
 
+@homeNurse.route("/getAllNurseinfo", methods =["GET"])
+def getAllNurseinfo():
+
+    result = None
+    try:
+
+        result = nurseDb.get_all_nurses()
+    except Exception as e:
+        flash("Error try again")
+        print( "exception: " + str(e))
+
+    print(result)
 
 
-# finished till nusring registration 
+    return "<h1>success</h1>"           # need to attach with frontend 
 
 
 
+
+@homeNurse.route("/getSingelNurseinfo/<nurse_phone>", methods =["GET"])
+def getSingelNurseinfo(nurse_phone):
+
+    result = None
+    try:
+
+        result = nurseDb.get_single_nurse(nurse_phone)
+    except Exception as e:
+        flash("Error try again")
+        print( "exception: " + str(e))
+
+    try:
+
+        comment = nurseDb.get_all_nurse_comments(nurse_phone=nurse_phone)
+    except Exception as e:
+        flash("Error try again")
+        print( "exception: " + str(e))
+
+
+    print(result)
+
+    return "<h1>success</h1>"      # need to attach with frontend 
+
+
+@homeNurse.route("/psottADDNurseComment/", methods =["GET"])
+def psottADDNurseComment():
+
+
+    nurse_phone = request.form.get('nurse_phone')
+    comment = request.form.get('nurse_phone')
+
+    if( str(nurse_phone) ==str(session['UserPhone'])):
+        flash("You cannot  comment in your profile")
+        
+        # need to redirect to comment page
+
+    result = None
+    try:
+
+        result = nurseDb.add_comment(nurse_phone=nurse_phone, user_phone= str(session['UserPhone']), user_name=session['UserName'], commnet=comment)
+    except Exception as e:
+        flash("Error try again")
+        print( "exception: " + str(e))
+
+    print(result)
+
+    return "<h1>success</h1>"      # need to redirect with frontend 
+
+
+
+
+
+# old code starts here
 
 @homeNurse.route("/postAddNurse", methods =["Post"])
 def postAddNurse():
