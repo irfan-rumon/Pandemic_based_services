@@ -71,10 +71,10 @@ class NurseDb():
         return nurse_info
 
 
-    def add_comment(self, nurse_phone, user_phone, user_name, commnet): 
+    def add_comment(self, nurse_phone, user_phone, user_name, comment): 
         nurse_comment = Nurse_comment(nurse_phone=nurse_phone, user_phone=user_phone, user_name=user_name, comment=comment)
         nurse_comment.save()
-        return {success: True}
+        return {"success": True}
 
 
     def get_all_nurse_comments(self, nurse_phone):

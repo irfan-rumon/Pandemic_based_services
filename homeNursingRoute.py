@@ -60,7 +60,7 @@ def getAllNurseinfo():
     print(result)
 
 
-    return "<h1>success</h1>"           # need to attach with frontend 
+    return render_template("nurse_all.html", nurses = result)            
 
 
 
@@ -80,21 +80,22 @@ def getSingelNurseinfo(nurse_phone):
 
         comment = nurseDb.get_all_nurse_comments(nurse_phone=nurse_phone)
     except Exception as e:
-        flash("Error try again")
+        flash(" Error try again")
         print( "exception: " + str(e))
+        
+
+    print(comment)
+
+    return render_template("nurseDetails.html", nurse = result[0], comment = comment)      
 
 
-    print(result)
-
-    return "<h1>success</h1>"      # need to attach with frontend 
-
-
-@homeNurse.route("/psottADDNurseComment/", methods =["GET"])
+@homeNurse.route("/psottADDNurseComment/", methods =["POST"])
+@is_loggedIn 
 def psottADDNurseComment():
 
 
-    nurse_phone = request.form.get('nurse_phone')
-    comment = request.form.get('nurse_phone')
+    nurse_phone = request.form.get('Pphone')
+    comment = request.form.get('Ucommnet')
 
     if( str(nurse_phone) ==str(session['UserPhone'])):
         flash("You cannot  comment in your profile")
@@ -104,14 +105,14 @@ def psottADDNurseComment():
     result = None
     try:
 
-        result = nurseDb.add_comment(nurse_phone=nurse_phone, user_phone= str(session['UserPhone']), user_name=session['UserName'], commnet=comment)
+        result = nurseDb.add_comment(nurse_phone=nurse_phone, user_phone= str(session['UserPhone']), user_name=session['UserName'], comment=comment)
+        
     except Exception as e:
-        flash("Error try again")
-        print( "exception: " + str(e))
+        flash( "Error try again ")
+        print( " exception: " + str(e))
 
-    print(result)
 
-    return "<h1>success</h1>"      # need to redirect with frontend 
+    return redirect(url_for('homeNurse.getSingelNurseinfo', nurse_phone =str(nurse_phone) ))      # need to redirect with frontend 
 
 
 
@@ -120,6 +121,7 @@ def psottADDNurseComment():
 # old code starts here
 
 @homeNurse.route("/postAddNurse", methods =["Post"])
+
 def postAddNurse():
 
     city = request.form.get('city'),
