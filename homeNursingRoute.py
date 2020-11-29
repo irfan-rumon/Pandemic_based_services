@@ -112,7 +112,7 @@ def psottADDNurseComment():
         print( " exception: " + str(e))
 
 
-    return redirect(url_for('homeNurse.getSingelNurseinfo', nurse_phone =str(nurse_phone) ))      # need to redirect with frontend 
+    return redirect(url_for('homeNurse.getSingelNurseinfo', nurse_phone =str(nurse_phone) ))      
 
 
 

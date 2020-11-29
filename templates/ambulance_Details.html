@@ -1,25 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %}Nurse Details{% endblock %}
+{% block title %}Ambulance Details{% endblock %}
 
 {% block body %}
 
 <div class="container mt-4">
-    <img class="rounded mx-auto d-block" height=150 class="img-fluid" src="/static/img/{{nurse['image']}}" class="card-img-top" alt="...">
+    <img class="rounded mx-auto d-block" height=150 class="img-fluid" src="/static/img/{{result['image']}}" class="card-img-top" alt="...">
     <div class="bg-light my-2 p-4" style="font-size: 20px;">
         <div class="d-flex" >
-            <p ><b class="mr-3">Name: </b>{{nurse['name']}} </p>
-            <p class="mx-auto"><b class="mr-3">Phone: </b> {{nurse['phone']}}</p>
+            <p ><b class="mr-3">Name: </b>{{result['name']}} </p>
+            <p class="mx-auto"><b class="mr-3">Phone: </b> {{result['phone']}}</p>
         </div>
         <div>
-            <p><b class="mr-3">Area:</b>{{nurse['area']}}</p>
+            <p><b class="mr-3">Area:</b>{{result['area']}}</p>
         </div>
-        <div>
-            <p><b class="mr-3">Confidential Experience:</b> {{nurse['certification_experience']}}</p>
-        </div>
-        <div>
-            <p><b class="mr-3">Charge Per Day:</b>{{nurse['charge']}} TK</p>
-        </div>
+        
         <div>
         </div>
         <hr/>
@@ -27,9 +22,9 @@
             <h4>Review</h4>
             <div class="border border-primary border-3 text-center">
                 <h5 class="bg-info text-white py-2"><b>Add Review</b></h5>
-                    <form class="row g-3 my-3 px-2" action="{{ url_for('homeNurse.psottADDNurseComment') }}" method="POST" >
+                    <form class="row g-3 my-3 px-2" action="{{ url_for('ambulance.postADDAmbulanceComment') }}" method="POST" >
                         <div class="input-group mb-3">
-                            <input type="hidden" name = "Pphone"  value = "{{nurse['phone']}}" >
+                            <input type="hidden" name = "Pphone"  value = "{{result['phone']}}" >
                             <input type="text" class="form-control" placeholder="Review Text" name="Ucommnet" id="Ucommnet" >
                             <button class="btn btn-success" type="submit" id="button-addon2">Submit Review</button>
                         </div>
