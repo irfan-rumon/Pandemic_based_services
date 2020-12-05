@@ -17,10 +17,10 @@ def postSignup():
     # print(request.form.get('UserName'))
 
     # user Roles  Which can be accepted . 
-    valid_User_Roles = set(['user',  'admin' ,'nurse', 'ambulance'])
+    valid_User_Roles = set(['user',  'admin' ,'nurse', 'ambulance', 'funeralVolunteer'])
     # checking if UserRole is valid from form submisson 
     if request.form.get('UserRole') not in  valid_User_Roles:
-        flash("This Role is not accepted. Only 'user','ambulance'  and 'nurse' roles are  valid ")
+        flash("This Role is not accepted. Only 'user','ambulance', 'funeralVolunteer'  and 'nurse' roles are  valid ")
         return redirect(url_for('auth.getSignup'))
 
     if not request.form.get('UserPhone').isnumeric() :
@@ -52,6 +52,9 @@ def postSignup():
     
     if success["success"] and request.form.get('UserRole') == 'ambulance':
         return redirect(url_for('ambulance.getAddAmbulanceinfo'))
+
+    if success["success"] and request.form.get('UserRole') == 'funeralVolunteer':
+        return redirect(url_for('fuService.getAddFUinfo'))
 
     
 
@@ -89,6 +92,10 @@ def postLogin():
 
             if session['UserRole'] == "ambulance" :
                return redirect(url_for('ambulance.getSingelAmbulanceinfo', ambulance_phone =str(session['UserPhone']) ))
+
+            if session['UserRole'] == "funeralVolunteer" :
+               return redirect(url_for('fuService.getSingelFUinfo', FU_phone =str(session['UserPhone']) ))
+
 
             return redirect(url_for('index'))
         else:

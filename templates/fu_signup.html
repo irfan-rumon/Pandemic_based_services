@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Funeral Vounteer  Info{% endblock %}
+
+
+
+{% block body %}
+
+
+<div class="m-2 " >
+    <div class="d-flex justify-content-center">
+        <h3>Add info</h3>
+    </div>
+    <form action="{{ url_for('fuService.postAddFUinfo') }}" method="POST" enctype="multipart/form-data" >
+        <div class="form-group">
+            <label for="Area">Area</label>
+            <input type="text" class="form-control" id="Area" name="Area" placeholder="Enter Area" required >
+        </div>
+    
+        
+        <div class="form-group">
+            <label for="UserImage">Image</label>
+            <input type="file" class="form-control" id="UserImage" name="UserImage"  required >
+        </div>
+        
+        
+        
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    
+
+</div>
+
+{% endblock %}

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Ambulance Details{% endblock %}
+{% block title %}Volunteer Details{% endblock %}
 
 {% block body %}
 
@@ -22,10 +22,10 @@
             <h4>Review</h4>
             <div class="border border-primary border-3 text-center">
                 <h5 class="bg-info text-white py-2"><b>Add Review</b></h5>
-                    <form class="row g-3 my-3 px-2" action="{{ url_for('ambulance.postADDAmbulanceComment') }}" method="POST" >
+                    <form class="row g-3 my-3 px-2" action="{{ url_for('fuService.postADDFUComment') }}" method="POST" >
                         <div class="input-group mb-3">
                             <input type="hidden" name = "Pphone"  value = "{{result['phone']}}" >
-                            <input type="text" class="form-control" placeholder="Review Text" name="Ucommnet" id="Ucommnet" required >
+                            <input type="text" class="form-control" placeholder="Review Text" name="Ucommnet" id="Ucommnet"  required>
                             <button class="btn btn-success" type="submit" id="button-addon2">Submit Review</button>
                         </div>
                     </form>

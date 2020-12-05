@@ -1,12 +1,125 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from funeralDB import FuneralDb
+from burialDB import BurialDb
 from middleware import is_loggedIn, has_permission 
 from datetime import datetime
-
+from uploadUtils import photos
 fuService = Blueprint("fuService",__name__, static_folder="static", template_folder="templates")
 
-fuDB = FuneralDb()
+fuDB = BurialDb()
 
+
+
+
+
+@fuService.route("/getAddFUinfo", methods =["GET"])
+def getAddFUinfo():
+    
+
+    return render_template("fu_signup.html")
+
+
+@fuService.route("/postAddFUinfo", methods =["POST"])
+def postAddFUinfo():
+    now = datetime.now()
+    name = now.strftime("%m%d%Y%H%M%S")
+    name = name+ "."
+
+    if 'UserImage' in request.files:
+        filename = photos.save(request.files['UserImage'],name=name)
+
+    try:
+
+        
+        result = fuDB.addBurial(image=filename,
+        name =session['UserName'] , 
+        phone = str(session['UserPhone']), 
+        area = request.form.get('Area')
+        )
+
+    except Exception as e:
+        flash("Error try again")
+        print( "exception: " + str(e))
+
+    
+    session.clear()
+    
+    return redirect(url_for('auth.getLogin'))
+    
+
+@fuService.route("/getAllFUinfo", methods =["GET"])
+def getAllFUinfo():
+
+    result = None
+    try:
+
+        result = fuDB.get_all_burial()
+    except Exception as e:
+        flash("Error try again")
+        print( "exception: " + str(e))
+
+    # print(result)
+
+
+    return render_template("fu_all.html", result = result)            
+
+
+
+
+@fuService.route("/getSingelFUinfo/<FU_phone>", methods =["GET"])
+def getSingelFUinfo(FU_phone):
+
+    result = None
+    try:
+
+        result = fuDB.get_single_burial(FU_phone)
+    except Exception as e:
+        flash("Error try again")
+        print( "exception: " + str(e))
+
+    try:
+
+        comment = fuDB.get_all_burial_comments(FU_phone)
+    except Exception as e:
+        flash(" Error try again")
+        print( "exception: " + str(e))
+        
+
+    
+
+    return render_template("fu_Details.html", result = result[0], comment = comment)      
+
+
+@fuService.route("/postADDFUComment/", methods =["POST"])
+@is_loggedIn 
+def postADDFUComment():
+
+
+    FU_phone = request.form.get('Pphone')
+    comment = request.form.get('Ucommnet')
+
+    if( str(FU_phone) ==str(session['UserPhone'])):
+        flash("You cannot  comment in your profile")
+        
+        # need to redirect to comment page
+
+        return redirect(url_for('fuService.getSingelFUinfo', FU_phone =str(FU_phone) ))
+
+    result = None
+    try:
+
+        result = fuDB.add_comment(burial_phone=FU_phone, user_phone= str(session['UserPhone']), user_name=session['UserName'], comment=comment)
+        
+    except Exception as e:
+        flash( "Error try again ")
+        print( " exception: " + str(e))
+
+
+    return redirect(url_for('fuService.getSingelFUinfo', FU_phone =str(FU_phone) ))      # need to redirect with frontend 
+
+
+
+
+# old code starts here
 
 @fuService.route("/postAddVolunteer", methods =["Post"])
 @is_loggedIn    
