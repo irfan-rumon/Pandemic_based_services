@@ -2,12 +2,12 @@ from mongoengine import *
 
 
 class HealthCareSpecialist(Document):
-    image = StringField(max_length=100, required=True)
-    name = StringField(max_length=100, required=True)
-    phone = StringField(max_length=100, required=True)
-    area = StringField(max_length=100, required=True)
-    certification_experience = StringField(max_length=400)
-    charge = IntField()
+        image = StringField(max_length=100, required=True)
+        name = StringField(max_length=100, required=True)
+        phone = StringField(max_length=100, required=True)
+        area = StringField(max_length=100, required=True)
+        certification_experience = StringField(max_length=400)
+        charge = IntField()
 
 class HealthCareSpecialist_comment(Document):
 	hc_specialist_phone = StringField(max_length=100)
@@ -17,7 +17,7 @@ class HealthCareSpecialist_comment(Document):
 
 class Message(Document):
 	user_phone = StringField(max_length=100)
-    advisor_phone = StringField(max_length=100)
+        advisor_phone = StringField(max_length=100)
 	message_sender = StringField(max_length=100)
 	message = StringField(max_length=100)
   
